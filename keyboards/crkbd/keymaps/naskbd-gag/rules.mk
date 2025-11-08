@@ -1,0 +1,12 @@
+MOUSEKEY_ENABLE = yes
+EXTRAKEY_ENABLE = yes
+KEY_LOCK_ENABLE = yes
+COMBO_ENABLE = yes
+KEY_OVERRIDE_ENABLE = yes
+RAW_ENABLE = yes
+DYNAMIC_MACRO_ENABLE = yes
+MIDI_ENABLE = yes
+
+SRC += monke.c
+SRC += samara.c
+SRC += ree.c
