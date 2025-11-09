@@ -150,32 +150,89 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 };
 
+bool in_mou = false;
 bool should_stick = false;
 
-bool handle_sym_tap(uint16_t keycode, keyrecord_t *record) {
-    if (!record->tap.count || !record->event.pressed) return true;
-    switch (keycode) {
-        case SYM_LGUI: tap_code16(KC_AT); break;
-        case SYM_LALT: tap_code16(KC_EQL); break;
-        case SYM_LCTL: tap_code16(KC_ASTR); break;
-        case SYM_LSFT: tap_code16(KC_PLUS); break;
-        case SYM_RSFT: tap_code16(KC_LPRN); break;
-        case SYM_RCTL: tap_code16(KC_LBRC); break;
-        case SYM_RALT: tap_code16(KC_LCBR); break;
-        case SYM_RGUI: tap_code16(KC_LT); break;
-        default: return true;
-    }
-    return false;
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    if (!handle_sym_tap(keycode, record)) return false;
+    switch (keycode) {
 
-    if (record->event.pressed && get_highest_layer(layer_state) == _MOU) {
-        should_stick = (keymap_key_to_keycode(_MOU, record->event.key) != KC_TRNS &&
-                        keycode != KC_NO);
-        if (!should_stick) layer_off(_MOU);
+        // hr mods in SYM
+        case SYM_LGUI:
+            if (record->tap.count) {
+                if (record->event.pressed) {
+                    tap_code16(KC_AT);
+                }
+                return false;
+            }
+            break;
+
+        case SYM_LALT:
+            if (record->tap.count) {
+                if (record->event.pressed) {
+                    tap_code16(KC_EQL);
+                }
+                return false;
+            }
+            break;
+
+        case SYM_LCTL:
+            if (record->tap.count) {
+                if (record->event.pressed) {
+                    tap_code16(KC_ASTR);
+                }
+                return false;
+            }
+            break;
+
+        case SYM_LSFT:
+            if (record->tap.count) {
+                if (record->event.pressed) {
+                    tap_code16(KC_PLUS);
+                }
+                return false;
+            }
+            break;
+
+        case SYM_RSFT:
+            if (record->tap.count) {
+                if (record->event.pressed) {
+                    tap_code16(KC_LPRN);
+                }
+                return false;
+            }
+            break;
+
+        case SYM_RCTL:
+            if (record->tap.count) {
+                if (record->event.pressed) {
+                    tap_code16(KC_LBRC);
+                }
+                return false;
+            }
+            break;
+
+        case SYM_RALT:
+            if (record->tap.count) {
+                if (record->event.pressed) {
+                    tap_code16(KC_LCBR);
+                }
+                return false;
+            }
+            break;
+
+        case SYM_RGUI:
+            if (record->tap.count) {
+                if (record->event.pressed) {
+                    tap_code16(KC_LT);
+                }
+                return false;
+            }
+            break;
     }
+
+    /* if (record->event.pressed && in_mou) { */
+    /*     should_stick = (keycode != _______ && keycode != XXXXXXX); */
+    /* } */
 
     return true;
 }
@@ -205,11 +262,20 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
     raw_hid_send(report, 32);
 
-    if (should_stick && layer != _MOU) {
-        state |= (1UL << _MOU);
-        layer = _MOU;
-        should_stick = false;
-    }
+    /* switch (layer) { */
+    /*     case _MOU: */
+    /*         in_mou = true; */
+    /*         break; */
+    /*     default: */
+    /*         if (should_stick) { */
+    /*             state |= (1UL << _MOU); */
+    /*             layer = _MOU; */
+    /*             should_stick = false; */
+    /*         } else { */
+    /*             in_mou = false; */
+    /*         } */
+    /*         break; */
+    /* } */
 
     return state;
 }
