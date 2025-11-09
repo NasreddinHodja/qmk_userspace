@@ -1,8 +1,10 @@
-#include <stdint.h>
-
+#include QMK_KEYBOARD_H
 #include "raw_hid.h"
 
-#include QMK_KEYBOARD_H
+#include <stdint.h>
+
+#include "sticky_layers.h"
+#include "layer_report.h"
 
 // base mods
 #define HRGUI(key) MT(MOD_LGUI, key)
@@ -63,6 +65,19 @@ enum layers {
     _GAM,
     _GNM,
 };
+const char* const layer_names[] = {
+    [0] = "BASE",
+    [1] = "SYM",
+    [2] = "NAV",
+    [3] = "MOU",
+    [4] = "FUN",
+    [5] = "GAM",
+    [6] = "GNM",
+};
+const uint8_t layer_count = sizeof(layer_names) / sizeof(layer_names[0]);
+
+const uint8_t sticky_layers[] = { _MOU };
+const uint8_t sticky_layer_count = sizeof(sticky_layers) / sizeof(sticky_layers[0]);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BASE] = LAYOUT_split_3x6_3(
@@ -150,132 +165,34 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 };
 
-bool in_mou = false;
-bool should_stick = false;
+bool handle_sym_tap(uint16_t keycode, keyrecord_t *record) {
+    if (!record->tap.count || !record->event.pressed) return true;
+    switch (keycode) {
+        case SYM_LGUI: tap_code16(KC_AT); break;
+        case SYM_LALT: tap_code16(KC_EQL); break;
+        case SYM_LCTL: tap_code16(KC_ASTR); break;
+        case SYM_LSFT: tap_code16(KC_PLUS); break;
+        case SYM_RSFT: tap_code16(KC_LPRN); break;
+        case SYM_RCTL: tap_code16(KC_LBRC); break;
+        case SYM_RALT: tap_code16(KC_LCBR); break;
+        case SYM_RGUI: tap_code16(KC_LT); break;
+        default: return true;
+    }
+    return false;
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    switch (keycode) {
+    if (!handle_sym_tap(keycode, record)) return false;
 
-        // hr mods in SYM
-        case SYM_LGUI:
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    tap_code16(KC_AT);
-                }
-                return false;
-            }
-            break;
-
-        case SYM_LALT:
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    tap_code16(KC_EQL);
-                }
-                return false;
-            }
-            break;
-
-        case SYM_LCTL:
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    tap_code16(KC_ASTR);
-                }
-                return false;
-            }
-            break;
-
-        case SYM_LSFT:
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    tap_code16(KC_PLUS);
-                }
-                return false;
-            }
-            break;
-
-        case SYM_RSFT:
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    tap_code16(KC_LPRN);
-                }
-                return false;
-            }
-            break;
-
-        case SYM_RCTL:
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    tap_code16(KC_LBRC);
-                }
-                return false;
-            }
-            break;
-
-        case SYM_RALT:
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    tap_code16(KC_LCBR);
-                }
-                return false;
-            }
-            break;
-
-        case SYM_RGUI:
-            if (record->tap.count) {
-                if (record->event.pressed) {
-                    tap_code16(KC_LT);
-                }
-                return false;
-            }
-            break;
-    }
-
-    /* if (record->event.pressed && in_mou) { */
-    /*     should_stick = (keycode != _______ && keycode != XXXXXXX); */
-    /* } */
+    handle_layer_stick(keycode, record);
 
     return true;
 }
 
-const char* layer_names[] = {
-    [0] = "BASE",
-    [1] = "SYM",
-    [2] = "NAV",
-    [3] = "MOU",
-    [4] = "FUN",
-    [5] = "GAM",
-    [6] = "GNM",
-};
-
-#define NUM_LAYERS (sizeof(layer_names) / sizeof(layer_names[0]))
-
 layer_state_t layer_state_set_user(layer_state_t state) {
     uint8_t layer = get_highest_layer(state);
 
-    uint8_t report[32] = {0};
-    report[0]          = 0x01;  // message type
-    report[1]          = layer; // layer number
+    send_layer_report(layer);
 
-    const char* layer_name = (layer < NUM_LAYERS && layer_names[layer] != NULL) ? layer_names[layer] : "UNKNOWN";
-
-    strncpy((char*)&report[2], layer_name, 30);
-
-    raw_hid_send(report, 32);
-
-    /* switch (layer) { */
-    /*     case _MOU: */
-    /*         in_mou = true; */
-    /*         break; */
-    /*     default: */
-    /*         if (should_stick) { */
-    /*             state |= (1UL << _MOU); */
-    /*             layer = _MOU; */
-    /*             should_stick = false; */
-    /*         } else { */
-    /*             in_mou = false; */
-    /*         } */
-    /*         break; */
-    /* } */
-
-    return state;
+    return handle_sticky_layer_state(state, layer);
 }

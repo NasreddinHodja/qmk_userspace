@@ -76,7 +76,7 @@ const char* const layer_names[] = {
 };
 const uint8_t layer_count = sizeof(layer_names) / sizeof(layer_names[0]);
 
-const uint8_t sticky_layers[] = { _NAV, _MOU };
+const uint8_t sticky_layers[] = { _MOU };
 const uint8_t sticky_layer_count = sizeof(sticky_layers) / sizeof(sticky_layers[0]);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -98,11 +98,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     XXXXXXX, SYM_LGUI, SYM_LALT, SYM_LCTL, SYM_LSFT, KC_BSLS,                  KC_PIPE, SYM_RSFT, SYM_RCTL, SYM_RALT, SYM_RGUI, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    XXXXXXX, KC_COLN, KC_QUES, KC_PERC, KC_EXLM , KC_GRV,                      KC_BSLS, KC_RPRN, KC_RBRC, KC_RCBR, KC_GT, XXXXXXX,
+    XXXXXXX, KC_COLN, KC_QUES, KC_PERC, KC_EXLM , KC_GRV,                      KC_BSLS, KC_RPRN, KC_RBRC, KC_RCBR, KC_GT  , XXXXXXX,
 //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         XXXXXXX, KC_MINS, KC_UNDS,    XXXXXXX, _______, XXXXXXX
                                     //`--------------------------'  `--------------------------'
 ),
+
+/* [_SYM] = LAYOUT_split_3x6_3( */
+/* //,-----------------------------------------------------.                    ,-----------------------------------------------------. */
+/*     XXXXXXX, KC_GRV , KC_LT  , KC_GT  , XXXXXXX, KC_PIPE,                      XXXXXXX, KC_LCBR, KC_RCBR, XXXXXXX, XXXXXXX, XXXXXXX, */
+/* //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------| */
+/*     XXXXXXX, KC_EXCL, XXXXXXX, XXXXXXX, KC_EQUL, KC_AMPR,                      XXXXXXX, KC_LPRN, KC_RPRN, XXXXXXX, XXXXXXX, XXXXXXX, */
+/* //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------| */
+/*     XXXXXXX, XXXXXXX, KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                      KC_AT  , KC_COLN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
+/* //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------| */
+/*                                         XXXXXXX, KC_MINS, KC_UNDS,    XXXXXXX, _______, XXXXXXX */
+/*                                     //`--------------------------'  `--------------------------' */
+/* ), */
 
 [_NAV] = LAYOUT_split_3x6_3(
 //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -169,9 +181,10 @@ bool handle_sym_tap(uint16_t keycode, keyrecord_t *record) {
     if (!record->tap.count || !record->event.pressed) return true;
     switch (keycode) {
         case SYM_LGUI: tap_code16(KC_AT); break;
-        case SYM_LALT: tap_code16(KC_EQL); break;
-        case SYM_LCTL: tap_code16(KC_ASTR); break;
-        case SYM_LSFT: tap_code16(KC_PLUS); break;
+        case SYM_LALT: tap_code16(KC_ASTR); break;
+        case SYM_LCTL: tap_code16(KC_PLUS); break;
+        case SYM_LSFT: tap_code16(KC_EQL); break;
+
         case SYM_RSFT: tap_code16(KC_LPRN); break;
         case SYM_RCTL: tap_code16(KC_LBRC); break;
         case SYM_RALT: tap_code16(KC_LCBR); break;

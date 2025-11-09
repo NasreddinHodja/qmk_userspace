@@ -17,6 +17,7 @@ void handle_layer_stick(uint16_t keycode, keyrecord_t *record) {
         bool valid_key = (keymap_key_to_keycode(active, record->event.key) != KC_TRNS &&
                           keycode != KC_NO);
         should_stick = valid_key;
+
         if (should_stick) last_sticky_layer = active;
         else layer_off(active);
     }
