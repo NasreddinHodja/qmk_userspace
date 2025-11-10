@@ -1,5 +1,5 @@
 #pragma once
-#include "quantum.h"
+#include QMK_KEYBOARD_H
 
 extern const char* const layer_names[];
 extern const uint8_t layer_count;

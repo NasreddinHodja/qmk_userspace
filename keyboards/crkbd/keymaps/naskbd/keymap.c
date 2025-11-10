@@ -5,6 +5,7 @@
 
 #include "sticky_layers.h"
 #include "layer_report.h"
+#include "mou_brr.h"
 
 // base mods
 #define HRGUI(key) MT(MOD_LGUI, key)
@@ -56,6 +57,10 @@ combo_t key_combos[] = {
     COMBO(del_combo, KC_DEL),
 };
 
+enum nas_keycodes {
+    MOU_BRR = SAFE_RANGE
+};
+
 enum layers {
     _BASE,
     _SYM,
@@ -104,25 +109,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                     //`--------------------------'  `--------------------------'
 ),
 
-/* [_SYM] = LAYOUT_split_3x6_3( */
-/* //,-----------------------------------------------------.                    ,-----------------------------------------------------. */
-/*     XXXXXXX, KC_GRV , KC_LT  , KC_GT  , XXXXXXX, KC_PIPE,                      XXXXXXX, KC_LCBR, KC_RCBR, XXXXXXX, XXXXXXX, XXXXXXX, */
-/* //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------| */
-/*     XXXXXXX, KC_EXCL, XXXXXXX, XXXXXXX, KC_EQUL, KC_AMPR,                      XXXXXXX, KC_LPRN, KC_RPRN, XXXXXXX, XXXXXXX, XXXXXXX, */
-/* //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------| */
-/*     XXXXXXX, XXXXXXX, KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                      KC_AT  , KC_COLN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
-/* //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------| */
-/*                                         XXXXXXX, KC_MINS, KC_UNDS,    XXXXXXX, _______, XXXXXXX */
-/*                                     //`--------------------------'  `--------------------------' */
-/* ), */
-
 [_NAV] = LAYOUT_split_3x6_3(
 //,-----------------------------------------------------.                    ,-----------------------------------------------------.
     XXXXXXX, KC_AGIN, KC_UNDO, C(KC_V), C(KC_C), KC_CUT ,                      KC_CUT , C(KC_C), C(KC_V), KC_UNDO, KC_AGIN, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_VOLU,                      KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_TAB , XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLD,                      KC_HOME, KC_PGDN, KC_PGUP, KC_END , XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                      KC_HOME, KC_PGDN, KC_PGUP, KC_END , XXXXXXX, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         XXXXXXX, _______, XXXXXXX,    KC_INS , KC_DEL , XXXXXXX
                                     //`--------------------------'  `--------------------------'
@@ -134,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_VOLU,                      MS_LEFT, MS_DOWN, MS_UP  , MS_RGHT, KC_TAB , XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLD,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3, XXXXXXX,
+    XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, MOU_BRR,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         XXXXXXX, XXXXXXX, _______,    MS_BTN2, MS_BTN1, XXXXXXX
                                     //`--------------------------'  `--------------------------'
@@ -199,6 +192,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     handle_layer_stick(keycode, record);
 
+    if (!process_mou_brr(keycode, record, MOU_BRR)) return false;
+
     return true;
 }
 
@@ -208,4 +203,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     send_layer_report(layer);
 
     return handle_sticky_layer_state(state, layer);
+}
+
+void matrix_scan_user(void) {
+    mou_brr_task();
 }
