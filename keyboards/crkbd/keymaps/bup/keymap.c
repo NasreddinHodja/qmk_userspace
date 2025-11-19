@@ -5,6 +5,7 @@
 
 #include "sticky_layers.h"
 #include "layer_report.h"
+#include "mou_brr.h"
 
 // base mods
 #define HRGUI(key) MT(MOD_LGUI, key)
@@ -56,6 +57,10 @@ combo_t key_combos[] = {
     COMBO(del_combo, KC_DEL),
 };
 
+enum nas_keycodes {
+    MOU_BRR = SAFE_RANGE
+};
+
 enum layers {
     _BASE,
     _SYM,
@@ -98,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     XXXXXXX, SYM_LGUI, SYM_LALT, SYM_LCTL, SYM_LSFT, KC_BSLS,                  KC_PIPE, SYM_RSFT, SYM_RCTL, SYM_RALT, SYM_RGUI, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    XXXXXXX, KC_COLN, KC_QUES, KC_PERC, KC_EXLM , KC_GRV,                      KC_BSLS, KC_RPRN, KC_RBRC, KC_RCBR, KC_GT, XXXXXXX,
+    XXXXXXX, KC_COLN, KC_QUES, KC_PERC, KC_EXLM , KC_GRV,                      KC_BSLS, KC_RPRN, KC_RBRC, KC_RCBR, KC_GT  , XXXXXXX,
 //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         XXXXXXX, KC_MINS, KC_UNDS,    XXXXXXX, _______, XXXXXXX
                                     //`--------------------------'  `--------------------------'
@@ -110,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_VOLU,                      KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_TAB , XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLD,                      KC_HOME, KC_PGDN, KC_PGUP, KC_END , XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                      KC_HOME, KC_PGDN, KC_PGUP, KC_END , XXXXXXX, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         XXXXXXX, _______, XXXXXXX,    KC_INS , KC_DEL , XXXXXXX
                                     //`--------------------------'  `--------------------------'
@@ -122,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_VOLU,                      MS_LEFT, MS_DOWN, MS_UP  , MS_RGHT, KC_TAB , XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLD,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3, XXXXXXX,
+    XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, MOU_BRR,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         XXXXXXX, XXXXXXX, _______,    MS_BTN2, MS_BTN1, XXXXXXX
                                     //`--------------------------'  `--------------------------'
@@ -169,9 +174,10 @@ bool handle_sym_tap(uint16_t keycode, keyrecord_t *record) {
     if (!record->tap.count || !record->event.pressed) return true;
     switch (keycode) {
         case SYM_LGUI: tap_code16(KC_AT); break;
-        case SYM_LALT: tap_code16(KC_EQL); break;
-        case SYM_LCTL: tap_code16(KC_ASTR); break;
-        case SYM_LSFT: tap_code16(KC_PLUS); break;
+        case SYM_LALT: tap_code16(KC_ASTR); break;
+        case SYM_LCTL: tap_code16(KC_PLUS); break;
+        case SYM_LSFT: tap_code16(KC_EQL); break;
+
         case SYM_RSFT: tap_code16(KC_LPRN); break;
         case SYM_RCTL: tap_code16(KC_LBRC); break;
         case SYM_RALT: tap_code16(KC_LCBR); break;
@@ -186,6 +192,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     handle_layer_stick(keycode, record);
 
+    if (!process_mou_brr(keycode, record, MOU_BRR)) return false;
+
     return true;
 }
 
@@ -195,4 +203,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     send_layer_report(layer);
 
     return handle_sticky_layer_state(state, layer);
+}
+
+void matrix_scan_user(void) {
+    mou_brr_task();
 }
