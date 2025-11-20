@@ -9,6 +9,8 @@
 
 #define EE_HANDS
 
+#define MOU_BRR_INTERVAL 40
+
 #ifdef MOUSEKEY_ENABLE
 #    define MOUSEKEY_DELAY 10
 #    define MOUSEKEY_INTERVAL 20
