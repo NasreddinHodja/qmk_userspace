@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 
-#include "sticky_layers.h"
-#include "layer_report.h"
-#include "mou_brr.h"
+#include "sticky_layers/sticky_layers.h"
+#include "layer_report/layer_report.h"
+#include "mouse_brr/mouse_brr.h"
 
 // base mods
 #define HRGUI(key) MT(MOD_LGUI, key)
