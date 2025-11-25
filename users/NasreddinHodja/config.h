@@ -7,7 +7,7 @@
 
 #define COMBO_TERM 40
 
-#define EE_HANDS
+#define MASTER_RIGHT
 
 #define MOU_BRR_INTERVAL 40
 

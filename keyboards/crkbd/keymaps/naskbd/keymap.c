@@ -33,16 +33,16 @@ const key_override_t* key_overrides[] = {
 };
 
 // combos
-const uint16_t PROGMEM tab_combo[]    = {KC_W, KC_F, COMBO_END};
-const uint16_t PROGMEM quote_combo[]  = {KC_F, KC_P, COMBO_END};
-const uint16_t PROGMEM circ_combo[] = {KC_C, KC_D, COMBO_END};
-const uint16_t PROGMEM dquote_combo[]   = {KC_L, KC_U, COMBO_END};
-const uint16_t PROGMEM tilde_combo[]  = {KC_U, KC_Y, COMBO_END};
-const uint16_t PROGMEM hash_combo[]  = {KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM dlr_combo[]  = {KC_H, KC_COMM, COMBO_END};
-const uint16_t PROGMEM ampr_combo[]  = {KC_COMM, KC_DOT, COMBO_END};
-const uint16_t PROGMEM caps_combo[]  = {KC_L, KC_U, KC_Y, COMBO_END};
-const uint16_t PROGMEM del_combo[]  = {KC_W, KC_F, KC_P, COMBO_END};
+const uint16_t PROGMEM tab_combo[]    = {KC_B, KC_M, COMBO_END};
+const uint16_t PROGMEM quote_combo[]  = {KC_M, KC_G, COMBO_END};
+const uint16_t PROGMEM circ_combo[]   = {KC_C, KC_P, COMBO_END};
+const uint16_t PROGMEM dquote_combo[] = {KC_L, KC_O, COMBO_END};
+const uint16_t PROGMEM tilde_combo[]  = {KC_O, KC_U, COMBO_END};
+const uint16_t PROGMEM hash_combo[]   = {KC_F, KC_C, COMBO_END};
+const uint16_t PROGMEM dlr_combo[]    = {KC_H, KC_COMM, COMBO_END};
+const uint16_t PROGMEM ampr_combo[]   = {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM caps_combo[]   = {KC_L, KC_O, KC_U, COMBO_END};
+const uint16_t PROGMEM del_combo[]    = {KC_B, KC_M, KC_G, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(tab_combo, KC_TAB),
@@ -87,12 +87,12 @@ const uint8_t sticky_layer_count = sizeof(sticky_layers) / sizeof(sticky_layers[
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BASE] = LAYOUT_split_3x6_3(
 //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-    XXXXXXX, KC_Q   , KC_W   , KC_F   , KC_P   , KC_B   ,                      KC_J   , KC_L   , KC_U   , KC_Y   , KC_SCLN, XXXXXXX,
+    XXXXXXX, KC_Q   , KC_B   , KC_M   , KC_G   , KC_K,                      KC_X   , KC_L   , KC_O   , KC_U   , KC_SCLN, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    XXXXXXX, HRGUI(KC_A), HRALT(KC_R), HRCTL(KC_S), HRSFT(KC_T), HRAGR(KC_G), HRAGR(KC_M), HRSFT(KC_N), HRCTL(KC_E), HRALT(KC_I), HRGUI(KC_O), XXXXXXX,
+    XXXXXXX, HRGUI(KC_D), HRALT(KC_N), HRCTL(KC_S), HRSFT(KC_T), HRAGR(KC_W), HRAGR(KC_Z), HRSFT(KC_R), HRCTL(KC_A), HRALT(KC_E), HRGUI(KC_I), XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    XXXXXXX, KC_Z   , KC_X   , KC_C   , KC_D   , KC_V   ,                      KC_K   , KC_H   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX,
-//|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+    XXXXXXX, KC_Y   , KC_F   , KC_C   , KC_P   , KC_V,                      KC_J   , KC_H   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX,
+//|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
                                 XXXXXXX, LT(_NAV, KC_ESC), LT(_MOU, KC_BSPC),    LT(_FUN, KC_ENT), LT(_SYM, KC_SPC), XXXXXXX
                                     //`--------------------------'  `--------------------------'
 ),
