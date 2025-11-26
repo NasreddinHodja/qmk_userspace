@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 #include "sticky_layers/sticky_layers.h"
-#include "layer_report/layer_report.h"
+/* #include "layer_report/layer_report.h" */
 #include "mouse_brr/mouse_brr.h"
 
 // base mods
@@ -209,7 +209,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     uint8_t layer = get_highest_layer(state);
-    send_layer_report(layer);
+    /* send_layer_report(layer); */
     return handle_sticky_layer_state(state, layer);
 }
 
