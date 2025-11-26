@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 #include "raw_hid.h"
-#include "raw_hid.h"
 
 #include <stdint.h>
 
@@ -59,28 +58,26 @@ combo_t key_combos[] = {
 };
 
 enum nas_keycodes {
-    MOU_BRR = SAFE_RANGE,
-    K_A,
-    K_AO,
-    K_O,
-    K_OES,
+    MOU_BRR = SAFE_RANGE
 };
 
 enum layers {
     _BASE,
-    _CED,
     _SYM,
     _NAV,
     _MOU,
     _FUN,
+    _GAM,
+    _GNM,
 };
 const char* const layer_names[] = {
-    [_BASE] = "BASE",
-    [_CED] = "CED",
-    [_SYM] = "SYM",
-    [_NAV] = "NAV",
-    [_MOU] = "MOU",
-    [_FUN] = "FUN",
+    [0] = "BASE",
+    [1] = "SYM",
+    [2] = "NAV",
+    [3] = "MOU",
+    [4] = "FUN",
+    [5] = "GAM",
+    [6] = "GNM",
 };
 const uint8_t layer_count = sizeof(layer_names) / sizeof(layer_names[0]);
 
@@ -97,18 +94,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX, KC_Z   , KC_X   , KC_C   , KC_D   , KC_V,                      KC_K   , KC_H   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
                                 XXXXXXX, LT(_NAV, KC_ESC), LT(_MOU, KC_BSPC),    LT(_FUN, KC_ENT), LT(_SYM, KC_SPC), XXXXXXX
-                                    //`--------------------------'  `--------------------------'
-),
-
-[_CED] = LAYOUT_split_3x6_3(
-//,-----------------------------------------------------.                    ,-----------------------------------------------------.
-    _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
-//|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    _______, _______, _______, _______, K_A    , _______,                      _______, K_AO   , _______, _______, _______, _______,
-//|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    _______, _______, _______, _______, K_O    , _______,                      _______, K_OES  , _______, _______, _______, _______,
-//|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-                               _______, _______, _______,                     _______, _______, _______
                                     //`--------------------------'  `--------------------------'
 ),
 
@@ -142,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_VOLU,                      MS_LEFT, MS_DOWN, MS_UP  , MS_RGHT, KC_TAB , XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3, XXXXXXX,
+    XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, MOU_BRR,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         XXXXXXX, XXXXXXX, _______,    MS_BTN2, MS_BTN1, XXXXXXX
                                     //`--------------------------'  `--------------------------'
@@ -150,13 +135,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_FUN] = LAYOUT_split_3x6_3(
 //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-    XXXXXXX, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_PAUS,                      XXXXXXX,DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_PAUS,                      TG(_GAM),DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     XXXXXXX, KC_F5  , KC_F6  , KC_F7  , KC_F8  , KC_PSCR,                      QK_BOOT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
     XXXXXXX, KC_F9  , KC_F10 , KC_F11 , KC_F12 , XXXXXXX,                      QK_LOCK, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
 //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                         XXXXXXX, KC_APP , XXXXXXX,    _______, XXXXXXX, XXXXXXX
+                                    //`--------------------------'  `--------------------------'
+),
+
+[_GAM] = LAYOUT_split_3x6_3(
+//,-----------------------------------------------------.                    ,-----------------------------------------------------.
+    KC_T   , KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   ,                      KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , XXXXXXX,
+//|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+    KC_G   , KC_LSFT, KC_A   , KC_S   , KC_D   , KC_F   ,                      KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,
+//|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+    KC_B   , KC_LCTL, KC_Z   , KC_X   , KC_C   , KC_V   ,                      KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, TG(_GAM),
+//|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                        KC_ESC , LT(_GNM, KC_SPC), KC_RBRC,    XXXXXXX, XXXXXXX, XXXXXXX
+                                    //`--------------------------'  `--------------------------'
+),
+
+[_GNM] = LAYOUT_split_3x6_3(
+//,-----------------------------------------------------.                    ,-----------------------------------------------------.
+    KC_GRV , KC_1   , KC_2   , _______, KC_3   , KC_4   ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+//|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+    KC_M   , _______, _______, _______, _______, KC_5   ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+//|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+    KC_I   , _______, KC_9   , KC_8   , KC_7   , KC_6   ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TG(_GAM),
+//|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                        XXXXXXX, _______, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
                                     //`--------------------------'  `--------------------------'
 ),
 };
@@ -178,27 +187,8 @@ bool handle_sym_tap(uint16_t keycode, keyrecord_t *record) {
     return false;
 }
 
-bool handle_ced(uint16_t keycode, keyrecord_t *record) {
-    if (!record->event.pressed) return true;
-    switch (keycode) {
-        case KC_COMM:
-            if (!(get_mods() & MOD_BIT(KC_RALT))) break;
-            layer_on(_CED);
-            break;
-        case K_A: layer_off(_CED); tap_code16(KC_TILD); tap_code16(KC_A); return false;
-        case K_O: layer_off(_CED); tap_code16(KC_TILD); tap_code16(KC_O); return false;
-        case K_AO: layer_off(_CED); tap_code16(KC_TILD); tap_code16(KC_A); SEND_STRING("o"); return false;
-        case K_OES: layer_off(_CED); tap_code16(KC_TILD); tap_code16(KC_O); SEND_STRING("es"); return false;
-        default:
-            layer_off(_CED);
-            return true;
-    }
-    return true;
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (!handle_sym_tap(keycode, record)) return false;
-    if (!handle_ced(keycode, record)) return false;
 
     handle_layer_stick(keycode, record);
 
@@ -209,7 +199,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     uint8_t layer = get_highest_layer(state);
+
     send_layer_report(layer);
+
     return handle_sticky_layer_state(state, layer);
 }
 
