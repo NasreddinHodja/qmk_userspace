@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, K_A    , _______,                      _______, K_AO   , _______, _______, _______, _______,
     _______, _______, _______, _______, K_O    , _______,                      _______, K_OES  , _______, _______, _______, _______,
-                               _______, _______, _______,                     _______, _______, _______
+                               _______, _______, _______,                      _______, _______, _______
 ),
 
 [_SYM] = LAYOUT_split_3x6_3(
@@ -148,19 +148,44 @@ bool handle_sym_tap(uint16_t keycode, keyrecord_t *record) {
     return false;
 }
 
+bool ced_toggled = false;
 bool handle_ced(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) return true;
     switch (keycode) {
         case KC_COMM:
             if (!(get_mods() & MOD_BIT(KC_RALT))) break;
-            layer_on(_CED);
+            ced_toggled = true;
             break;
-        case K_A: layer_off(_CED); tap_code16(KC_TILD); tap_code16(KC_A); return false;
-        case K_O: layer_off(_CED); tap_code16(KC_TILD); tap_code16(KC_O); return false;
-        case K_AO: layer_off(_CED); tap_code16(KC_TILD); tap_code16(KC_A); SEND_STRING("o"); return false;
-        case K_OES: layer_off(_CED); tap_code16(KC_TILD); tap_code16(KC_O); SEND_STRING("es"); return false;
+        case HRSFT(KC_T):
+            if (ced_toggled) {
+                tap_code16(KC_TILD); tap_code16(KC_A);
+                ced_toggled = false;
+                return false;
+            }
+            break;
+        case KC_D:
+            if (ced_toggled) {
+                tap_code16(KC_TILD); tap_code16(KC_O);
+                ced_toggled = false;
+                return false;
+            }
+            break;
+        case HRSFT(KC_N):
+            if (ced_toggled) {
+                tap_code16(KC_TILD); tap_code16(KC_A); SEND_STRING("o");
+                ced_toggled = false;
+                return false;
+            }
+            break;
+        case KC_H:
+            if (ced_toggled) {
+                tap_code16(KC_TILD); tap_code16(KC_O); SEND_STRING("es");
+                ced_toggled = false;
+                return false;
+            }
+            break;
         default:
-            layer_off(_CED);
+            ced_toggled = false;
             return true;
     }
     return true;
