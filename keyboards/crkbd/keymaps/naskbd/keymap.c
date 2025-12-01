@@ -68,7 +68,7 @@ enum nas_keycodes {
 
 enum layers {
     _BASE,
-    _CED,
+    _NUM,
     _SYM,
     _NAV,
     _MOU,
@@ -76,7 +76,7 @@ enum layers {
 };
 const char* const layer_names[] = {
     [_BASE] = "BASE",
-    [_CED] = "CED",
+    [_NUM] = "NUM",
     [_SYM] = "SYM",
     [_NAV] = "NAV",
     [_MOU] = "MOU",
@@ -93,13 +93,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX, HRGUI(KC_A), HRALT(KC_R), HRCTL(KC_S), HRSFT(KC_T), HRAGR(KC_G), HRAGR(KC_M), HRSFT(KC_N), HRCTL(KC_E), HRALT(KC_I), HRGUI(KC_O), XXXXXXX,
     XXXXXXX, KC_Z   , KC_X   , KC_C   , KC_D   , KC_V,                      KC_K   , KC_H   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX,
                                 XXXXXXX, LT(_NAV, KC_ESC), LT(_MOU, KC_BSPC),    KC_ENT, LT(_SYM, KC_SPC), XXXXXXX
-),
-
-[_CED] = LAYOUT_split_3x6_3(
-    _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, K_A    , _______,                      _______, K_AO   , _______, _______, _______, _______,
-    _______, _______, _______, _______, K_O    , _______,                      _______, K_OES  , _______, _______, _______, _______,
-                               _______, _______, _______,                      _______, _______, _______
 ),
 
 [_SYM] = LAYOUT_split_3x6_3(
