@@ -33,9 +33,8 @@ const uint16_t PROGMEM tilde_combo[]  = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM hash_combo[]   = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM dlr_combo[]    = {KC_H, KC_COMM, COMBO_END};
 const uint16_t PROGMEM ampr_combo[]   = {KC_COMM, KC_DOT, COMBO_END};
-const uint16_t PROGMEM caps_combo[]   = {KC_L, KC_U, KC_Y, COMBO_END};
-const uint16_t PROGMEM del_combo[]    = {KC_W, KC_F, KC_P, COMBO_END};
-const uint16_t PROGMEM csc_combo[]   = {C(KC_C), C(KC_X), COMBO_END};
+const uint16_t PROGMEM caps_combo[]   = {KC_J, KC_L, COMBO_END};
+const uint16_t PROGMEM del_combo[]    = {KC_P, KC_B, COMBO_END};
 const uint16_t PROGMEM csv_combo[]   = {C(KC_V), C(KC_C), COMBO_END};
 
 combo_t key_combos[] = {
@@ -91,8 +90,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_NUM] = LAYOUT_split_3x6_3(
-    XXXXXXX, XXXXXXX, KC_9   , KC_8   , KC_7   , KC_EQL ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, KC_GRV , KC_3   , KC_2   , KC_1   , KC_LBRC,                      KC_RALT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
+    XXXXXXX, XXXXXXX, KC_9   , KC_8   , KC_7   , KC_LBRC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_GRV , KC_3   , KC_2   , KC_1   , KC_EQL ,                      KC_RALT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
     XXXXXXX, KC_SLSH, KC_6   , KC_5   , KC_4   , KC_RBRC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                         XXXXXXX, LT(_FUN, KC_0), KC_BSLS,      XXXXXXX, _______, XXXXXXX
 ),
