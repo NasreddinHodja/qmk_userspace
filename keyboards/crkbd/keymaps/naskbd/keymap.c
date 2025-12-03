@@ -44,6 +44,8 @@ const uint16_t PROGMEM dlr_combo[]    = {KC_H, KC_COMM, COMBO_END};
 const uint16_t PROGMEM ampr_combo[]   = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM caps_combo[]   = {KC_L, KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM del_combo[]    = {KC_W, KC_F, KC_P, COMBO_END};
+const uint16_t PROGMEM csc_combo[]   = {C(KC_C), C(KC_X), COMBO_END};
+const uint16_t PROGMEM csv_combo[]   = {C(KC_V), C(KC_C), COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(tab_combo, KC_TAB),
@@ -56,6 +58,8 @@ combo_t key_combos[] = {
     COMBO(dlr_combo, KC_DLR),
     COMBO(caps_combo, KC_CAPS),
     COMBO(del_combo, KC_DEL),
+    COMBO(csc_combo, LCS(KC_C)),
+    COMBO(csv_combo, LCS(KC_V)),
 };
 
 enum nas_keycodes {
@@ -98,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_SYM] = LAYOUT_split_3x6_3(
     XXXXXXX, KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,                      KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXXX,
     XXXXXXX, SYM_LGUI, SYM_LALT, SYM_LCTL, SYM_LSFT, KC_BSLS,                  KC_PIPE, SYM_RSFT, SYM_RCTL, SYM_RALT, SYM_RGUI, XXXXXXX,
-    XXXXXXX, KC_COLN, KC_QUES, KC_PERC, KC_EXLM , KC_GRV,                      KC_BSLS, KC_RPRN, KC_RBRC, KC_RCBR, KC_GT  , XXXXXXX,
+    XXXXXXX, KC_COLN, KC_QUES, KC_PERC, KC_EXLM , KC_GRV,                      KC_BSLS, KC_RPRN, KC_RCBR, KC_RBRC, KC_GT  , XXXXXXX,
                                         XXXXXXX, LT(_FUN, KC_MINS), KC_UNDS,    XXXXXXX, _______, XXXXXXX
 ),
 
@@ -133,8 +137,8 @@ bool handle_sym_tap(uint16_t keycode, keyrecord_t *record) {
         case SYM_LSFT: tap_code16(KC_EQL); break;
 
         case SYM_RSFT: tap_code16(KC_LPRN); break;
-        case SYM_RCTL: tap_code16(KC_LBRC); break;
-        case SYM_RALT: tap_code16(KC_LCBR); break;
+        case SYM_RCTL: tap_code16(KC_LCBR); break;
+        case SYM_RALT: tap_code16(KC_LBRC); break;
         case SYM_RGUI: tap_code16(KC_LT); break;
         default: return true;
     }
