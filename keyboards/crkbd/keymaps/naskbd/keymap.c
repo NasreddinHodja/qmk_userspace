@@ -36,6 +36,7 @@ const uint16_t PROGMEM ampr_combo[]   = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM caps_combo[]   = {KC_J, KC_L, COMBO_END};
 const uint16_t PROGMEM del_combo[]    = {KC_P, KC_B, COMBO_END};
 const uint16_t PROGMEM csv_combo[]   = {C(KC_V), C(KC_C), COMBO_END};
+const uint16_t PROGMEM csc_combo[]   = {C(KC_W), C(KC_V), COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(tab_combo, KC_TAB),
@@ -48,8 +49,8 @@ combo_t key_combos[] = {
     COMBO(dlr_combo, KC_DLR),
     COMBO(caps_combo, KC_CAPS),
     COMBO(del_combo, KC_DEL),
-    COMBO(csc_combo, LCS(KC_C)),
     COMBO(csv_combo, LCS(KC_V)),
+    COMBO(csc_combo, LCS(KC_C)),
 };
 
 enum nas_keycodes {
@@ -118,7 +119,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_FUN] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_PAUS,                      XXXXXXX,DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_PAUS,                      XXXXXXX, DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, XXXXXXX,
     XXXXXXX, KC_F11 , KC_F3  , KC_F2  , KC_F1  , KC_PSCR,                      QK_BOOT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
     XXXXXXX, KC_F12 , KC_F6  , KC_F5  , KC_F4  , XXXXXXX,                      QK_LOCK, KC_APP , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                         XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
