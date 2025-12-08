@@ -68,6 +68,8 @@ enum layers {
     _NAV,
     _MOU,
     _FUN,
+    _GAM,
+    /* _GNM, */
 };
 const char* const layer_names[] = {
     [_BASE] = "BASE",
@@ -75,7 +77,8 @@ const char* const layer_names[] = {
     [_SYM] = "SYM",
     [_NAV] = "NAV",
     [_MOU] = "MOU",
-    [_FUN] = "FUN",
+    [_GAM] = "GAM",
+    /* [_GNM] = "GNM", */
 };
 const uint8_t layer_count = sizeof(layer_names) / sizeof(layer_names[0]);
 
@@ -105,9 +108,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_NAV] = LAYOUT_split_3x6_3(
-    XXXXXXX, C(KC_Z), C(KC_U), C(KC_V), C(KC_C), C(KC_X),                      C(KC_X), C(KC_C), C(KC_V), C(KC_U), C(KC_Z), XXXXXXX,
-    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_VOLU,                      KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_TAB , XXXXXXX,
-    XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, C(KC_A),                      KC_HOME, KC_PGDN, KC_PGUP, KC_END , XXXXXXX, XXXXXXX,
+    XXXXXXX, C(KC_Z), C(KC_U), C(KC_V), C(KC_C), C(KC_X),                      C(KC_X), C(KC_C), C(KC_V), C(KC_U), KC_MUTE, XXXXXXX,
+    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                      KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_VOLU, XXXXXXX,
+    XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, C(KC_A),                      KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_VOLD, XXXXXXX,
                                         XXXXXXX, _______, XXXXXXX,    KC_INS , LT(_FUN, KC_DEL) , XXXXXXX
 ),
 
@@ -119,11 +122,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_FUN] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_PAUS,                      XXXXXXX, DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_PAUS,                      TG(_GAM), DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, XXXXXXX,
     XXXXXXX, KC_F11 , KC_F3  , KC_F2  , KC_F1  , KC_PSCR,                      QK_BOOT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
     XXXXXXX, KC_F12 , KC_F6  , KC_F5  , KC_F4  , XXXXXXX,                      QK_LOCK, KC_APP , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                         XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
 ),
+
+[_GAM] = LAYOUT_split_3x6_3(
+    KC_T   , KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   ,                      KC_Y, KC_U   , KC_I   , KC_O   , KC_P   , XXXXXXX,
+    KC_G   , KC_LSFT, KC_A   , KC_S   , KC_D   , KC_F   ,                      KC_H, KC_J   , KC_K   , KC_L   , KC_SCLN, XXXXXXX,
+    /* KC_B   , KC_LCTL, KC_Z   , KC_X   , KC_C   , KC_V   ,                      KC_N, KC_M   , KC_COMM, KC_DOT , KC_SLSH, TG(_GAM), */
+    KC_B   , KC_LCTL, KC_Z   , KC_1   , KC_2   , KC_V   ,                      KC_N, KC_3   , KC_4   , KC_DOT , KC_SLSH, TG(_GAM),
+                                        XXXXXXX, /* LT(_GNM, KC_SPC) */ KC_ESC, KC_BSPC,    KC_ENT, KC_SPC , XXXXXXX
+),
+
+/* [_GNM] = LAYOUT_split_3x6_3( */
+/*     _______, _______, KC_1   , _______, KC_2   , KC_3   ,                      _______, _______, _______, _______, _______, _______, */
+/*     KC_0   , _______, _______, _______, _______, KC_4   ,                      _______, _______, _______, _______, _______, _______, */
+/*     _______, _______, KC_9   , KC_7   , KC_6   , KC_5   ,                      _______, _______, _______, _______, _______, _______, */
+/*                                         XXXXXXX, _______, XXXXXXX,    _______, _______, _______ */
+/* ), */
 };
 
 bool ced_toggled = false;
