@@ -37,6 +37,18 @@ const uint16_t PROGMEM caps_combo[]   = {KC_J, KC_L, COMBO_END};
 const uint16_t PROGMEM del_combo[]    = {KC_P, KC_B, COMBO_END};
 const uint16_t PROGMEM csv_combo[]   = {C(KC_V), C(KC_C), COMBO_END};
 const uint16_t PROGMEM csc_combo[]   = {C(KC_W), C(KC_V), COMBO_END};
+/* const uint16_t PROGMEM tab_combo[]    = {KC_L, KC_D, COMBO_END}; */
+/* const uint16_t PROGMEM quote_combo[]  = {KC_D, KC_C, COMBO_END}; */
+/* const uint16_t PROGMEM circ_combo[]   = {KC_M, KC_W, COMBO_END}; */
+/* const uint16_t PROGMEM dquote_combo[] = {KC_Y, KC_U, COMBO_END}; */
+/* const uint16_t PROGMEM tilde_combo[]  = {KC_O, KC_U, COMBO_END}; */
+/* const uint16_t PROGMEM hash_combo[]   = {KC_Q, KC_M, COMBO_END}; */
+/* const uint16_t PROGMEM dlr_combo[]    = {KC_F, KC_COMM, COMBO_END}; */
+/* const uint16_t PROGMEM ampr_combo[]   = {KC_COMM, KC_DOT, COMBO_END}; */
+/* const uint16_t PROGMEM caps_combo[]   = {KC_J, KC_L, COMBO_END}; */
+/* const uint16_t PROGMEM del_combo[]    = {KC_C, KC_V, COMBO_END}; */
+/* const uint16_t PROGMEM csv_combo[]   = {C(KC_V), C(KC_C), COMBO_END}; */
+/* const uint16_t PROGMEM csc_combo[]   = {C(KC_W), C(KC_V), COMBO_END}; */
 
 combo_t key_combos[] = {
     COMBO(tab_combo, KC_TAB),
@@ -87,6 +99,9 @@ const uint8_t sticky_layer_count = sizeof(sticky_layers) / sizeof(sticky_layers[
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BASE] = LAYOUT_split_3x6_3(
+    /* XXXXXXX, KC_B   , KC_L   , KC_D   , KC_C   , KC_V,                      KC_J   , KC_Y   , KC_O   , KC_U   , KC_SCLN, XXXXXXX, */
+    /* XXXXXXX, HRGUI(KC_N), HRALT(KC_R), HRCTL(KC_T), HRSFT(KC_S), HRAGR(KC_G), HRAGR(KC_P), HRSFT(KC_H), HRCTL(KC_A), HRALT(KC_E), HRGUI(KC_O), XXXXXXX, */
+    /* XXXXXXX, KC_X   , KC_Q   , KC_M   , KC_W   , KC_Z,                      KC_K   , KC_F   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX, */
     XXXXXXX, KC_Q   , KC_W   , KC_F   , KC_P   , KC_B,                      KC_J   , KC_L   , KC_U   , KC_Y   , KC_SCLN, XXXXXXX,
     XXXXXXX, HRGUI(KC_A), HRALT(KC_R), HRCTL(KC_S), HRSFT(KC_T), HRAGR(KC_G), HRAGR(KC_M), HRSFT(KC_N), HRCTL(KC_E), HRALT(KC_I), HRGUI(KC_O), XXXXXXX,
     XXXXXXX, KC_Z   , KC_X   , KC_C   , KC_D   , KC_V,                      KC_K   , KC_H   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX,
@@ -101,9 +116,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_SYM] = LAYOUT_split_3x6_3(
-    XXXXXXX, XXXXXXX, KC_AT  , KC_LCBR, KC_LPRN, KC_LT  ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, KC_PERC, KC_ASTR, KC_EXLM, KC_PLUS,                      KC_RALT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
-    XXXXXXX, XXXXXXX, KC_PIPE, KC_RCBR, KC_RPRN, KC_GT  ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_CIRC, KC_HASH, KC_LCBR, KC_LPRN, KC_LT  ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_PERC, KC_PERC, KC_ASTR, KC_EXLM, KC_PLUS,                      KC_RALT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
+    XXXXXXX, KC_AT  , KC_PIPE, KC_AMPR, KC_PLUS, KC_DLR ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                         XXXXXXX, KC_MINS, KC_UNDS,    _______, XXXXXXX, XXXXXXX
 ),
 
