@@ -37,18 +37,6 @@ const uint16_t PROGMEM caps_combo[]   = {KC_J, KC_L, COMBO_END};
 const uint16_t PROGMEM del_combo[]    = {KC_P, KC_B, COMBO_END};
 const uint16_t PROGMEM csv_combo[]   = {C(KC_V), C(KC_C), COMBO_END};
 const uint16_t PROGMEM csc_combo[]   = {C(KC_W), C(KC_V), COMBO_END};
-/* const uint16_t PROGMEM tab_combo[]    = {KC_L, KC_D, COMBO_END}; */
-/* const uint16_t PROGMEM quote_combo[]  = {KC_D, KC_C, COMBO_END}; */
-/* const uint16_t PROGMEM circ_combo[]   = {KC_M, KC_W, COMBO_END}; */
-/* const uint16_t PROGMEM dquote_combo[] = {KC_Y, KC_U, COMBO_END}; */
-/* const uint16_t PROGMEM tilde_combo[]  = {KC_O, KC_U, COMBO_END}; */
-/* const uint16_t PROGMEM hash_combo[]   = {KC_Q, KC_M, COMBO_END}; */
-/* const uint16_t PROGMEM dlr_combo[]    = {KC_F, KC_COMM, COMBO_END}; */
-/* const uint16_t PROGMEM ampr_combo[]   = {KC_COMM, KC_DOT, COMBO_END}; */
-/* const uint16_t PROGMEM caps_combo[]   = {KC_J, KC_L, COMBO_END}; */
-/* const uint16_t PROGMEM del_combo[]    = {KC_C, KC_V, COMBO_END}; */
-/* const uint16_t PROGMEM csv_combo[]   = {C(KC_V), C(KC_C), COMBO_END}; */
-/* const uint16_t PROGMEM csc_combo[]   = {C(KC_W), C(KC_V), COMBO_END}; */
 
 combo_t key_combos[] = {
     COMBO(tab_combo, KC_TAB),
@@ -99,9 +87,6 @@ const uint8_t sticky_layer_count = sizeof(sticky_layers) / sizeof(sticky_layers[
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BASE] = LAYOUT_split_3x6_3(
-    /* XXXXXXX, KC_B   , KC_L   , KC_D   , KC_C   , KC_V,                      KC_J   , KC_Y   , KC_O   , KC_U   , KC_SCLN, XXXXXXX, */
-    /* XXXXXXX, HRGUI(KC_N), HRALT(KC_R), HRCTL(KC_T), HRSFT(KC_S), HRAGR(KC_G), HRAGR(KC_P), HRSFT(KC_H), HRCTL(KC_A), HRALT(KC_E), HRGUI(KC_O), XXXXXXX, */
-    /* XXXXXXX, KC_X   , KC_Q   , KC_M   , KC_W   , KC_Z,                      KC_K   , KC_F   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX, */
     XXXXXXX, KC_Q   , KC_W   , KC_F   , KC_P   , KC_B,                      KC_J   , KC_L   , KC_U   , KC_Y   , KC_SCLN, XXXXXXX,
     XXXXXXX, HRGUI(KC_A), HRALT(KC_R), HRCTL(KC_S), HRSFT(KC_T), HRAGR(KC_G), HRAGR(KC_M), HRSFT(KC_N), HRCTL(KC_E), HRALT(KC_I), HRGUI(KC_O), XXXXXXX,
     XXXXXXX, KC_Z   , KC_X   , KC_C   , KC_D   , KC_V,                      KC_K   , KC_H   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX,
@@ -109,8 +94,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_NUM] = LAYOUT_split_3x6_3(
-    XXXXXXX, XXXXXXX, KC_9   , KC_8   , KC_7   , KC_LBRC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, KC_GRV , KC_3   , KC_2   , KC_1   , KC_EQL ,                      KC_RALT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
+    XXXXXXX, KC_GRV , KC_9   , KC_8   , KC_7   , KC_LBRC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_QUOT, KC_3   , KC_2   , KC_1   , KC_EQL ,                      KC_RALT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
     XXXXXXX, KC_SLSH, KC_6   , KC_5   , KC_4   , KC_RBRC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                         XXXXXXX, LT(_FUN, KC_0), KC_BSLS,      XXXXXXX, _______, XXXXXXX
 ),
@@ -146,8 +131,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_GAM] = LAYOUT_split_3x6_3(
     KC_T   , KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   ,                      KC_Y, KC_U   , KC_I   , KC_O   , KC_P   , XXXXXXX,
     KC_G   , KC_LSFT, KC_A   , KC_S   , KC_D   , KC_F   ,                      KC_H, KC_J   , KC_K   , KC_L   , KC_SCLN, XXXXXXX,
-    /* KC_B   , KC_LCTL, KC_Z   , KC_X   , KC_C   , KC_V   ,                      KC_N, KC_M   , KC_COMM, KC_DOT , KC_SLSH, TG(_GAM), */
-    KC_B   , KC_LCTL, KC_Z   , KC_1   , KC_2   , KC_V   ,                      KC_N, KC_3   , KC_4   , KC_DOT , KC_SLSH, TG(_GAM),
+    KC_B   , KC_LCTL, KC_Z   , KC_X   , KC_C   , KC_V   ,                      KC_N, KC_M   , KC_COMM, KC_DOT , KC_SLSH, TG(_GAM),
+    /* KC_B   , KC_LCTL, KC_Z   , KC_1   , KC_2   , KC_V   ,                      KC_N, KC_3   , KC_4   , KC_DOT , KC_SLSH, TG(_GAM), */
                                         XXXXXXX, /* LT(_GNM, KC_SPC) */ KC_ESC, KC_BSPC,    KC_ENT, KC_SPC , XXXXXXX
 ),
 
