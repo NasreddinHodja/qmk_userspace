@@ -55,10 +55,13 @@ combo_t key_combos[] = {
 
 enum nas_keycodes {
     MOU_BRR = SAFE_RANGE,
+    // CED
     K_A,
     K_AO,
     K_O,
     K_OES,
+    // linkedin link
+    K_LKN,
 };
 
 enum layers {
@@ -124,10 +127,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_FUN] = LAYOUT_split_3x6_3(
     XXXXXXX, KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_PAUS,                      TG(_GAM), DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, XXXXXXX,
     XXXXXXX, KC_F11 , KC_F3  , KC_F2  , KC_F1  , KC_PSCR,                      QK_BOOT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
-    XXXXXXX, KC_F12 , KC_F6  , KC_F5  , KC_F4  , XXXXXXX,                      QK_LOCK, KC_APP , XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_F12 , KC_F6  , KC_F5  , KC_F4  , XXXXXXX,                      QK_LOCK, KC_APP , K_LKN , XXXXXXX, XXXXXXX, XXXXXXX,
                                         XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
 ),
-
 [_GAM] = LAYOUT_split_3x6_3(
     KC_T   , KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   ,                      KC_Y, KC_U   , KC_I   , KC_O   , KC_P   , XXXXXXX,
     KC_G   , KC_LSFT, KC_A   , KC_S   , KC_D   , KC_F   ,                      KC_H, KC_J   , KC_K   , KC_L   , KC_SCLN, XXXXXXX,
@@ -143,6 +145,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*                                         XXXXXXX, _______, XXXXXXX,    _______, _______, _______ */
 /* ), */
 };
+
+bool handle_lkn(uint16_t keycode, keyrecord_t *record) {
+    if (!record->event.pressed) return true;
+    if (keycode == K_LKN) {
+        SEND_STRING("www.linkedin.com/in/tom");
+        tap_code16(KC_QUOT); tap_code16(KC_A);
+        SEND_STRING("s-bizet-0474971b7");
+        return false;
+    }
+    return true;
+}
 
 bool ced_toggled = false;
 bool handle_ced(uint16_t keycode, keyrecord_t *record) {
@@ -189,6 +202,7 @@ bool handle_ced(uint16_t keycode, keyrecord_t *record) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (!handle_ced(keycode, record)) return false;
+    if (!handle_lkn(keycode, record)) return false;
 
     handle_layer_stick(keycode, record);
 
