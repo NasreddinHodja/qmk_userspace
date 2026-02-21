@@ -1,0 +1,148 @@
+#+TITLE: naskbd -- QMK Userspace
+#+DESCRIPTION: Colemak-DH keymap for the Corne (crkbd) split keyboard
+
+Colemak-DH keymap for the *Corne (crkbd)* split keyboard, with home row mods, combos, mouse keys, sticky layers, and cedilla input.
+
+* Keymaps
+
+| Keymap           | Description                                  |
+|------------------+----------------------------------------------|
+| =naskbd=         | Primary daily driver -- Colemak-DH + HRMods  |
+| =naskbd-gag=     | Meme keymap (monke, samara, ree)             |
+
+* Layers
+
+** BASE (Colemak-DH)
+
+#+begin_example
+ q       w       f       p       b          j       l       u       y       ;
+ a/GUI   r/ALT   s/CTL   t/SFT   g/RALT     m/RALT  n/SFT   e/CTL   i/ALT   o/GUI
+ z       x       c       d       v          k       h       ,       .       /
+                   ESC/NAV  BSPC/MOU     ENT/SYM  SPC/NUM
+#+end_example
+
+** NUM
+
+#+begin_example
+ `       9       8       7       [
+ '       3       2       1       =          RALT    SFT     CTL     ALT     GUI
+ /       6       5       4       ]
+                          0/FUN   \                   _
+#+end_example
+
+** SYM
+
+#+begin_example
+ ^       ~       {       (       &
+ %       #       *       !       +          RALT    SFT     CTL     ALT     GUI
+ @       |       }       )       $
+                          -       _          _
+#+end_example
+
+** NAV
+
+#+begin_example
+ C-z     C-u     C-v     C-c     C-x        C-x     C-c     C-v     C-u     MUTE
+ GUI     ALT     CTL     SFT     CAPS       LEFT    DOWN    UP      RIGHT   VOL+
+         PREV    PLAY    NEXT    C-a        HOME    PGDN    PGUP    END     VOL-
+                          _               INS     DEL/FUN
+#+end_example
+
+** MOU (sticky)
+
+#+begin_example
+ C-z     C-u     C-v     C-c     C-x        C-x     C-c     C-v     C-u     C-z
+ GUI     ALT     CTL     SFT     VOL+       <-M     M-v     M-^     M->     TAB
+ VOL-    PREV    PLAY    NEXT    BRR        WHL<    WHLv    WHL^    WHL>    BTN3
+                                  _          BTN2    BTN1
+#+end_example
+
+** FUN
+
+#+begin_example
+ F10     F9      F8      F7      PAUSE      GAM     PLY1    REC1    RSTP
+ F11     F3      F2      F1      PSCR       BOOT    SFT     CTL     ALT     GUI
+ F12     F6      F5      F4                 LOCK    APP     LKN
+                          _                          _
+#+end_example
+
+** GAM (QWERTY, toggle from FUN)
+
+Standard QWERTY layout for gaming. Toggle back with =TG(_GAM)= on the right bottom corner.
+
+* Combos
+
+| Keys      | Output                    |
+|-----------+---------------------------|
+| W + F     | Tab                       |
+| F + P     | '                         |
+| C + D     | ^                         |
+| L + U     | "                         |
+| U + Y     | ~                         |
+| X + C     | #                         |
+| H + ,     | $                         |
+| , + .     | &                         |
+| J + L     | Caps Lock                 |
+| P + B     | Delete                    |
+| C-V + C-C | C-S-V (paste in terminal) |
+| C-W + C-V | C-S-C (copy in terminal)  |
+
+* Home Row Mods
+
+#+begin_example
+ a/GUI   r/ALT   s/CTL   t/SFT   g/RALT  |  m/RALT  n/SFT   e/CTL   i/ALT   o/GUI
+#+end_example
+
+- Tapping term: 180ms
+- Quick tap term: 120ms
+- Permissive hold enabled
+
+* Custom Features
+
+- *Sticky mouse layer* -- MOU stays active until a valid keypress, allowing one-handed mouse control
+- *Mouse burst (BRR)* -- rapid-fire mouse clicks at 40ms intervals
+- *Cedilla input* -- RALT + =,= toggles cedilla mode for Portuguese characters (ã, õ, ão, ões)
+- *Dynamic macros* -- record/play two slots, Ctrl+REC1/PLY1 accesses slot 2 via key override
+- *Layer reporting* -- sends current layer name over Raw HID to the host
+- *LinkedIn macro* -- K_LKN outputs the profile URL
+
+* Key Overrides
+
+| Trigger        | Output  |
+|----------------+---------|
+| Ctrl + DM_REC1 | DM_REC2 |
+| Ctrl + DM_PLY1 | DM_PLY2 |
+
+* Config
+
+| Setting          | Value |
+|------------------+-------|
+| Master side      | Right |
+| Tapping term     | 180ms |
+| Quick tap term   | 120ms |
+| Combo term       | 40ms  |
+| Mouse BRR interval | 40ms |
+
+* Shared User Code
+
+Located in =users/NasreddinHodja/=:
+
+- =sticky_layers/= -- persistent layer activation until a valid keypress
+- =mouse_brr/= -- rapid click implementation
+- =layer_report/= -- sends layer state over Raw HID
+
+* Building
+
+#+begin_src sh
+# setup (once)
+qmk setup
+qmk config user.overlay_dir="$(realpath .)"
+
+# compile
+qmk compile -kb crkbd/rev1 -km naskbd
+
+# or build all targets
+qmk userspace-compile
+#+end_src
+
+Firmware is also built via GitHub Actions on push -- check the Releases tab for =.uf2= files.
