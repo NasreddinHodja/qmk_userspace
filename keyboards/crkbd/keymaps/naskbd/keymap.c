@@ -1,10 +1,10 @@
 #include QMK_KEYBOARD_H
 #include "raw_hid.h"
-#include "raw_hid.h"
 
 #include <stdint.h>
+#include "print.h"
 
-#include "sticky_layers/sticky_layers.h"
+// #include "sticky_layers/sticky_layers.h"
 #include "layer_report/layer_report.h"
 #include "mouse_brr/mouse_brr.h"
 
@@ -56,13 +56,11 @@ combo_t key_combos[] = {
 enum nas_keycodes {
     MOU_BRR = SAFE_RANGE,
     // CED
-    K_A,
-    K_AO,
-    K_O,
-    K_OES,
+    K_A, K_AO, K_O, K_OES,
     // linkedin & gh links
-    K_LKN,
-    K_GHL,
+    K_LKN, K_GHL,
+    // SYS
+    K_WM0, K_WM1, K_WM2, K_WM3, K_WM4, K_WM5, K_WM6, K_WM7, K_WM8, K_WM9,
 };
 
 enum layers {
@@ -74,6 +72,7 @@ enum layers {
     _FUN,
     _GAM,
     /* _GNM, */
+    _SYS,
 };
 const char* const layer_names[] = {
     [_BASE] = "BASE",
@@ -83,18 +82,17 @@ const char* const layer_names[] = {
     [_MOU] = "MOU",
     [_GAM] = "GAM",
     /* [_GNM] = "GNM", */
+    [_SYS] = "SYS",
 };
 const uint8_t layer_count = sizeof(layer_names) / sizeof(layer_names[0]);
 
-const uint8_t sticky_layers[] = { _MOU };
-const uint8_t sticky_layer_count = sizeof(sticky_layers) / sizeof(sticky_layers[0]);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BASE] = LAYOUT_split_3x6_3(
     XXXXXXX, KC_Q   , KC_W   , KC_F   , KC_P   , KC_B,                      KC_J   , KC_L   , KC_U   , KC_Y   , KC_SCLN, XXXXXXX,
     XXXXXXX, HRGUI(KC_A), HRALT(KC_R), HRCTL(KC_S), HRSFT(KC_T), HRAGR(KC_G), HRAGR(KC_M), HRSFT(KC_N), HRCTL(KC_E), HRALT(KC_I), HRGUI(KC_O), XXXXXXX,
     XXXXXXX, KC_Z   , KC_X   , KC_C   , KC_D   , KC_V,                      KC_K   , KC_H   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX,
-                                XXXXXXX, LT(_NAV, KC_ESC), LT(_MOU, KC_BSPC),    LT(_SYM, KC_ENT), LT(_NUM, KC_SPC), XXXXXXX
+                                XXXXXXX, LT(_NAV, KC_ESC), LT(_SYS, KC_BSPC),    LT(_SYM, KC_ENT), LT(_NUM, KC_SPC), XXXXXXX
 ),
 
 [_NUM] = LAYOUT_split_3x6_3(
@@ -114,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NAV] = LAYOUT_split_3x6_3(
     XXXXXXX, C(KC_Z), C(KC_U), C(KC_V), C(KC_C), C(KC_X),                      C(KC_X), C(KC_C), C(KC_V), C(KC_U), KC_MUTE, XXXXXXX,
     XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_CAPS,                      KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_VOLU, XXXXXXX,
-    XXXXXXX, XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, C(KC_A),                      KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_VOLD, XXXXXXX,
+    XXXXXXX, TG(_MOU), KC_MPRV, KC_MPLY, KC_MNXT, C(KC_A),                      KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_VOLD, XXXXXXX,
                                         XXXXXXX, _______, XXXXXXX,    KC_INS , LT(_FUN, KC_DEL) , XXXXXXX
 ),
 
@@ -122,13 +120,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX, C(KC_Z), C(KC_U), C(KC_V), C(KC_C), C(KC_X),                      C(KC_X), C(KC_C), C(KC_V), C(KC_U), C(KC_Z), XXXXXXX,
     XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_VOLU,                      MS_LEFT, MS_DOWN, MS_UP  , MS_RGHT, KC_TAB , XXXXXXX,
     XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, MOU_BRR,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3, XXXXXXX,
-                                        XXXXXXX, XXXXXXX, _______,    MS_BTN2, MS_BTN1, XXXXXXX
+                                        _______, _______, _______,    MS_BTN2, MS_BTN1, XXXXXXX
 ),
 
 [_FUN] = LAYOUT_split_3x6_3(
     XXXXXXX, KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_PAUS,                      TG(_GAM), DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, XXXXXXX,
     XXXXXXX, KC_F11 , KC_F3  , KC_F2  , KC_F1  , KC_PSCR,                      QK_BOOT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
-    XXXXXXX, KC_F12 , KC_F6  , KC_F5  , KC_F4  , XXXXXXX,                      QK_LOCK, KC_APP , K_LKN , K_GHL , XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_F12 , KC_F6  , KC_F5  , KC_F4  , EE_CLR ,                      QK_LOCK, KC_APP , K_LKN , K_GHL , XXXXXXX, XXXXXXX,
                                         XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
 ),
 [_GAM] = LAYOUT_split_3x6_3(
@@ -138,13 +136,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* KC_B   , KC_LCTL, KC_Z   , KC_1   , KC_2   , KC_V   ,                      KC_N, KC_3   , KC_4   , KC_DOT , KC_SLSH, TG(_GAM), */
                                         XXXXXXX, /* LT(_GNM, KC_SPC) */ KC_ESC, KC_BSPC,    KC_ENT, KC_SPC , XXXXXXX
 ),
-
 /* [_GNM] = LAYOUT_split_3x6_3( */
 /*     _______, _______, KC_1   , _______, KC_2   , KC_3   ,                      _______, _______, _______, _______, _______, _______, */
 /*     KC_0   , _______, _______, _______, _______, KC_4   ,                      _______, _______, _______, _______, _______, _______, */
 /*     _______, _______, KC_9   , KC_7   , KC_6   , KC_5   ,                      _______, _______, _______, _______, _______, _______, */
 /*                                         XXXXXXX, _______, XXXXXXX,    _______, _______, _______ */
 /* ), */
+[_SYS] = LAYOUT_split_3x6_3(
+    XXXXXXX, XXXXXXX, K_WM9   , K_WM8   , K_WM7   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, K_WM3   , K_WM2   , K_WM1   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, K_WM6   , K_WM5   , K_WM4   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                        _______, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
+),
 };
 
 bool handle_links(uint16_t keycode, keyrecord_t *record) {
@@ -205,11 +208,31 @@ bool handle_ced(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    if (!handle_ced(keycode, record)) return false;
-    if (!handle_links(keycode, record)) return false;
+bool handle_sys(uint16_t keycode, keyrecord_t *record) {
+    if (!record->event.pressed) return true;
+    if (keycode < K_WM0 || keycode > K_WM9) return true;
+    static const uint16_t wm_keys[] = {
+        KC_0, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9
+    };
+    tap_code16(G(wm_keys[keycode - K_WM0]));
+    return false;
+}
 
-    handle_layer_stick(keycode, record);
+bool handle_mou_exit(uint16_t keycode, keyrecord_t *record) {
+    if (!record->event.pressed) return true;
+    if (get_highest_layer(layer_state) != _MOU) return true;
+    if (keymap_key_to_keycode(_MOU, record->event.key) == KC_TRNS) {
+        layer_off(_MOU);
+        return false;
+    }
+    return true;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    if (!handle_mou_exit(keycode, record)) return false;
+    if (!handle_ced(keycode, record)) return false;
+    if (!handle_sys(keycode, record)) return false;
+    if (!handle_links(keycode, record)) return false;
 
     if (!process_mou_brr(keycode, record, MOU_BRR)) return false;
 
@@ -217,10 +240,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    uint8_t layer = get_highest_layer(state);
-    send_layer_report(layer);
-    layer_state_t new_state = handle_sticky_layer_state(state, layer);
-    return new_state;
+    send_layer_report(get_highest_layer(state));
+    return state;
 }
 
 void matrix_scan_user(void) {
