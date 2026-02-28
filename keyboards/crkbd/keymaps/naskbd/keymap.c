@@ -143,10 +143,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*                                         XXXXXXX, _______, XXXXXXX,    _______, _______, _______ */
 /* ), */
 [_SYS] = LAYOUT_split_3x6_3(
-    XXXXXXX, XXXXXXX, K_WM9   , K_WM8   , K_WM7   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, K_WM3   , K_WM2   , K_WM1   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, G(KC_Q), K_WM9   , K_WM8   , K_WM7   , XXXXXXX,                      XXXXXXX, C(KC_A), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, K_WM3   , K_WM2   , K_WM1   , XXXXXXX,                      XXXXXXX, KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX, K_WM6   , K_WM5   , K_WM4   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                        _______, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
+                                        XXXXXXX, XXXXXXX, _______,    XXXXXXX, XXXXXXX, XXXXXXX
 ),
 };
 
@@ -211,20 +211,35 @@ bool handle_ced(uint16_t keycode, keyrecord_t *record) {
 bool handle_sys(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) return true;
     if (keycode < K_WM0 || keycode > K_WM9) return true;
+
     static const uint16_t wm_keys[] = {
         KC_0, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9
     };
-    tap_code16(G(wm_keys[keycode - K_WM0]));
+
+    uint8_t idx = keycode - K_WM0;
+
+    if (get_mods() & MOD_MASK_SHIFT) {
+        uint8_t saved_mods = get_mods();
+        del_mods(MOD_MASK_SHIFT);
+        tap_code16(C(KC_A));
+        tap_code16(wm_keys[idx]);
+        set_mods(saved_mods);
+    } else {
+        tap_code16(G(wm_keys[idx]));
+    }
+
     return false;
 }
 
 bool handle_mou_exit(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) return true;
     if (get_highest_layer(layer_state) != _MOU) return true;
+
     if (keymap_key_to_keycode(_MOU, record->event.key) == KC_TRNS) {
         layer_off(_MOU);
         return false;
     }
+
     return true;
 }
 
