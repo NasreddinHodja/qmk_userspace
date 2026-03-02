@@ -57,8 +57,8 @@ enum nas_keycodes {
     MOU_BRR = SAFE_RANGE,
     // CED
     K_A, K_AO, K_O, K_OES,
-    // linkedin & gh links
-    K_LKN, K_GHL,
+    // links
+    K_LKL, K_GHL, K_EML,
     // SYS
     K_WM0, K_WM1, K_WM2, K_WM3, K_WM4, K_WM5, K_WM6, K_WM7, K_WM8, K_WM9,
 };
@@ -73,6 +73,7 @@ enum layers {
     _GAM,
     /* _GNM, */
     _SYS,
+    _PST,
 };
 const char* const layer_names[] = {
     [_BASE] = "BASE",
@@ -83,6 +84,7 @@ const char* const layer_names[] = {
     [_GAM] = "GAM",
     /* [_GNM] = "GNM", */
     [_SYS] = "SYS",
+    [_PST] = "PST",
 };
 const uint8_t layer_count = sizeof(layer_names) / sizeof(layer_names[0]);
 
@@ -126,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_FUN] = LAYOUT_split_3x6_3(
     XXXXXXX, KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_PAUS,                      TG(_GAM), DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, XXXXXXX,
     XXXXXXX, KC_F11 , KC_F3  , KC_F2  , KC_F1  , KC_PSCR,                      QK_BOOT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
-    XXXXXXX, KC_F12 , KC_F6  , KC_F5  , KC_F4  , EE_CLR ,                      QK_LOCK, KC_APP , K_LKN , K_GHL , XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_F12 , KC_F6  , KC_F5  , KC_F4  , EE_CLR ,                      QK_LOCK, KC_APP , OSL(_PST), K_GHL , XXXXXXX, XXXXXXX,
                                         XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
 ),
 [_GAM] = LAYOUT_split_3x6_3(
@@ -143,16 +145,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*                                         XXXXXXX, _______, XXXXXXX,    _______, _______, _______ */
 /* ), */
 [_SYS] = LAYOUT_split_3x6_3(
-    XXXXXXX, G(KC_Q), K_WM9   , K_WM8   , K_WM7   , XXXXXXX,                      XXXXXXX, C(KC_A), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, K_WM3   , K_WM2   , K_WM1   , XXXXXXX,                      XXXXXXX, KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, G(KC_Q), K_WM9   , K_WM8   , K_WM7   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, C(KC_A), K_WM3   , K_WM2   , K_WM1   , XXXXXXX,                      XXXXXXX, KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     XXXXXXX, XXXXXXX, K_WM6   , K_WM5   , K_WM4   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                         XXXXXXX, XXXXXXX, _______,    XXXXXXX, XXXXXXX, XXXXXXX
+),
+[_PST] = LAYOUT_split_3x6_3(
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, K_LKL  , K_GHL  , K_EML  , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                        XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
 ),
 };
 
 bool handle_links(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) return true;
-    if (keycode == K_LKN) {
+    if (keycode == K_LKL) {
         SEND_STRING("www.linkedin.com/in/tom");
         tap_code16(KC_QUOT); tap_code16(KC_A);
         SEND_STRING("s-bizet-0474971b7");
@@ -160,6 +168,10 @@ bool handle_links(uint16_t keycode, keyrecord_t *record) {
     }
     if (keycode == K_GHL) {
         SEND_STRING("https://github.com/NasreddinHodja");
+        return false;
+    }
+    if (keycode == K_EML) {
+        SEND_STRING("tbizetde@gmail.com");
         return false;
     }
     return true;
