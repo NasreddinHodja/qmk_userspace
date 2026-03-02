@@ -45,7 +45,7 @@ layers:
   FUN:
     - ['', F10, F9, F8, F7, PAUS, {t: GAM, type: toggle}, DM_PLY1, DM_REC1, DM_RSTP, '', '']
     - ['', F11, F3, F2, F1, PSCR, QK_BOOT, LSFT, LCTL, LALT, LGUI, '']
-    - ['', F12, F6, F5, F4, EE_CLR, QK_LOCK, APP, {t: PST, type: oneshot}, GHL, '', '']
+    - ['', F12, F6, F5, F4, EE_CLR, QK_LOCK, APP, PST, '', '', '']
     - ''
     - {type: held}
     - ''
