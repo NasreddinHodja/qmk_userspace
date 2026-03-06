@@ -21,19 +21,19 @@ layers:
   NUM:
     - ['', '`', '9', '8', '7', '[', '', '', '', '', '', '']
     - ['', "'", '3', '2', '1', '=', 'RALT', 'LSFT', 'LCTL', 'LALT', 'LGUI', '']
-    - ['', '/', '6', '5', '4', ']', '', '', '', '', '', '']
+    - ['', '/', '6', '5', '4', ']', '', '', '', '', '', 'LLCK']
     - ['', {t: '0', h: FUN}, '\', '', {type: held}, '']
 
   SYM:
     - ['', '^', '~', '{', '(', '&', '', '', '', '', '', '']
     - ['', '%', '#', '*', '!', '+', 'RALT', 'LSFT', 'LCTL', 'LALT', 'LGUI', '']
-    - ['', '@', '|', '}', ')', '$', '', '', '', '', '', '']
+    - ['', '@', '|', '}', ')', '$', '', '', '', '', '', 'LLCK']
     - ['', '-', '_', {type: held}, '', '']
 
   NAV:
-    - ['', C-z, C-u, C-v, C-c, C-x, C-x, C-c, C-v, C-u, MUTE, '']
+    - ['', C-z, C-a, C-v, C-c, C-x, C-x, C-c, C-v, C-u, MUTE, '']
     - ['', LGUI, LALT, LCTL, LSFT, CAPS, LEFT, DOWN, UP, RGHT, VOLU, '']
-    - ['', {t: MOU, type: toggle}, MPRV, MPLY, MNXT, C-a, HOME, PGDN, PGUP, END, VOLD, '']
+    - ['LLCK', {t: MOU, type: toggle}, MPRV, MPLY, MNXT, C-a, HOME, PGDN, PGUP, END, VOLD, '']
     - ['', {type: held}, '', INS, {t: DEL, h: FUN}, '']
 
   MOU:
@@ -45,7 +45,7 @@ layers:
   FUN:
     - ['', F10, F9, F8, F7, PAUS, {t: GAM, type: toggle}, DM_PLY1, DM_REC1, DM_RSTP, '', '']
     - ['', F11, F3, F2, F1, PSCR, QK_BOOT, LSFT, LCTL, LALT, LGUI, '']
-    - ['', F12, F6, F5, F4, EE_CLR, QK_LOCK, APP, PST, '', '', '']
+    - ['', F12, F6, F5, F4, EE_CLR, QK_LOCK, APP, PST, '', '', 'LLCK']
     - ''
     - {type: held}
     - ''
@@ -72,10 +72,16 @@ layers:
     - ['', '', '', '', '', '']
 
   GAM:
-    - [T, TAB, Q, W, E, R, Y, U, I, O, P, '']
-    - [G, LSFT, A, S, D, F, H, J, K, L, ';', '']
-    - [B, LCTL, Z, X, C, V, N, M, ',', '.', '/', {t: GAM, type: toggle}]
-    - ['', ESC, BSPC, ENT, SPC, '']
+    - [T, TAB, Q, X, E, R, Y, U, I, O, P, '']
+    - [G, LSFT, A, W, D, F, H, J, K, L, ';', '']
+    - [B, LCTL, Z, S, C, V, N, M, ',', '.', '/', {t: GAM, type: toggle}]
+    - ['GNM', ESC, BSPC, ENT, SPC, '']
+
+  GNM:
+    - ['1', '2', '3', '', '4', '5', '', '', '', '', '', '']
+    - ['0', '', '', '', '', '6', '', '', '', '', '', '']
+    - ['`', '', '9', '', '8', '7', '', '', '', '', '', '']
+    - [{type: held}, '', '', '', '', '']
 
 combos:
   - {p: [2, 3], k: "TAB", l: ["BASE"]}

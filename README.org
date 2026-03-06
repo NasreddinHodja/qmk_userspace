@@ -1,7 +1,7 @@
 #+TITLE: naskbd -- QMK Userspace
 #+DESCRIPTION: Colemak-DH keymap for the Corne (crkbd) split keyboard
 
-Colemak-DH keymap for the *Corne (crkbd)* split keyboard, with home row mods, combos, mouse keys, sticky layers, and cedilla input.
+Colemak-DH keymap for the *Corne (crkbd)* split keyboard, with home row mods, combos, mouse keys, and cedilla input.
 
 * Keymaps
 
