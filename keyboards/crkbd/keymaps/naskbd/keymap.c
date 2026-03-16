@@ -60,6 +60,8 @@ enum nas_keycodes {
     K_LKL, K_GHL, K_EML,
     // SYS
     K_WM0, K_WM1, K_WM2, K_WM3, K_WM4, K_WM5, K_WM6, K_WM7, K_WM8, K_WM9,
+    // GMP hat
+    JS_UP, JS_DN, JS_LT, JS_RT,
 };
 
 enum layers {
@@ -71,6 +73,7 @@ enum layers {
     _FUN,
     _GAM,
     _GNM,
+    _GMP,
     _SYS,
     _PST,
 };
@@ -82,6 +85,7 @@ const char* const layer_names[] = {
     [_MOU] = "MOU",
     [_GAM] = "GAM",
     [_GNM] = "GNM",
+    [_GMP] = "GMP",
     [_SYS] = "SYS",
     [_PST] = "PST",
 };
@@ -122,9 +126,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, MOU_BRR,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3, XXXXXXX,
                                         _______, _______, _______,    MS_BTN2, MS_BTN1, XXXXXXX
 ),
-
 [_FUN] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_PAUS,                      TG(_GAM), DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_PAUS,                      TG(_GAM), DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, TG(_GMP),
     XXXXXXX, KC_F11 , KC_F3  , KC_F2  , KC_F1  , KC_PSCR,                      QK_BOOT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
     XXXXXXX, KC_F12 , KC_F6  , KC_F5  , KC_F4  , EE_CLR ,                      QK_LOCK, KC_APP , OSL(_PST), XXXXXXX, XXXXXXX, QK_LLCK,
                                         XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
@@ -140,6 +143,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_0   , _______, _______, _______, _______, KC_6   ,                      _______, _______, _______, _______, _______, _______,
     KC_GRV , _______, KC_9   , _______, KC_8   , KC_7   ,                      _______, _______, _______, _______, _______, _______,
                                         _______, XXXXXXX, XXXXXXX,    _______, _______, _______
+),
+[_GMP] = LAYOUT_split_3x6_3(
+    JS_9   , JS_8   , XXXXXXX, XXXXXXX, JS_DN  , JS_LT  ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    JS_1   , JS_3   , XXXXXXX, XXXXXXX, JS_RT  , JS_UP  ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    JS_0   , JS_2   , JS_5   , JS_7   , JS_6   , JS_4   ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TG(_GMP),
+                                        XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_SPC , XXXXXXX
 ),
 [_SYS] = LAYOUT_split_3x6_3(
     XXXXXXX, G(KC_Q), K_WM9   , K_WM8   , K_WM7   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -240,6 +249,27 @@ bool handle_sys(uint16_t keycode, keyrecord_t *record) {
     return false;
 }
 
+bool handle_gmp_hat(uint16_t keycode, keyrecord_t *record) {
+    static bool hat_up = false, hat_dn = false, hat_lt = false, hat_rt = false;
+    switch (keycode) {
+        case JS_UP: hat_up = record->event.pressed; break;
+        case JS_DN: hat_dn = record->event.pressed; break;
+        case JS_LT: hat_lt = record->event.pressed; break;
+        case JS_RT: hat_rt = record->event.pressed; break;
+        default: return true;
+    }
+    if      ( hat_up && !hat_lt && !hat_rt) joystick_set_hat(JOYSTICK_HAT_NORTH);
+    else if ( hat_up &&  hat_rt)            joystick_set_hat(JOYSTICK_HAT_NORTHEAST);
+    else if (!hat_up && !hat_dn &&  hat_rt) joystick_set_hat(JOYSTICK_HAT_EAST);
+    else if ( hat_dn &&  hat_rt)            joystick_set_hat(JOYSTICK_HAT_SOUTHEAST);
+    else if ( hat_dn && !hat_lt && !hat_rt) joystick_set_hat(JOYSTICK_HAT_SOUTH);
+    else if ( hat_dn &&  hat_lt)            joystick_set_hat(JOYSTICK_HAT_SOUTHWEST);
+    else if (!hat_up && !hat_dn &&  hat_lt) joystick_set_hat(JOYSTICK_HAT_WEST);
+    else if ( hat_up &&  hat_lt)            joystick_set_hat(JOYSTICK_HAT_NORTHWEST);
+    else                                    joystick_set_hat(JOYSTICK_HAT_CENTER);
+    return false;
+}
+
 bool handle_mou_exit(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) return true;
     if (get_highest_layer(layer_state) != _MOU) return true;
@@ -253,6 +283,7 @@ bool handle_mou_exit(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    if (!handle_gmp_hat(keycode, record)) return false;
     if (!handle_mou_exit(keycode, record)) return false;
     if (!handle_ced(keycode, record)) return false;
     if (!handle_sys(keycode, record)) return false;

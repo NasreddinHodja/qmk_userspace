@@ -1,3 +1,1 @@
 USER_NAME = NasreddinHodja
-CONSOLE_ENABLE = yes
-LAYER_LOCK_ENABLE = yes

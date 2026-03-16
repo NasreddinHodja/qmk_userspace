@@ -5,6 +5,9 @@ COMBO_ENABLE = yes
 KEY_OVERRIDE_ENABLE = yes
 RAW_ENABLE = yes
 DYNAMIC_MACRO_ENABLE = yes
+CONSOLE_ENABLE = yes
+LAYER_LOCK_ENABLE = yes
+JOYSTICK_ENABLE = yes
 
 SRC += $(USER_PATH)/layer_report/layer_report.c
 SRC += $(USER_PATH)/mouse_brr/mouse_brr.c
