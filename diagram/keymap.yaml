@@ -2,20 +2,20 @@ layout: {qmk_keyboard: crkbd/rev2, layout_name: LAYOUT_split_3x6_3}
 
 layers:
   BASE:
-    - ['', q, w, f, p, b, j, l, u, y, ;, '']
+    - ['', b, l, d, c, v, j, y, o, u, ';', '']
     - ''
-    - {t: a, h: LGUI}
+    - {t: n, h: LGUI}
     - {t: r, h: LALT}
-    - {t: s, h: LCTL}
-    - {t: t, h: LSFT}
+    - {t: t, h: LCTL}
+    - {t: s, h: LSFT}
     - {t: g, h: RALT}
-    - {t: m, h: RALT}
-    - {t: n, h: LSFT}
-    - {t: e, h: LCTL}
-    - {t: i, h: LALT}
-    - {t: o, h: LGUI}
+    - {t: p, h: RALT}
+    - {t: h, h: LSFT}
+    - {t: a, h: LCTL}
+    - {t: e, h: LALT}
+    - {t: i, h: LGUI}
     - ''
-    - ['', z, x, c, d, v, k, h, ',', '.', '/', '']
+    - ['', x, q, m, w, z, k, f, ',', '.', '/', '']
     - ['', {t: ESC, h: NAV}, {t: BSPC, h: SYS}, {t: ENT, h: SYM}, {t: SPC, h: NUM}, '']
 
   NUM:
@@ -43,7 +43,7 @@ layers:
     - ['', '', '', MS_BTN2, MS_BTN1, '']
 
   FUN:
-    - ['', F10, F9, F8, F7, PAUS, {t: GAM, type: toggle}, DM_PLY1, DM_REC1, DM_RSTP, '', '']
+    - ['', F10, F9, F8, F7, PAUS, {t: GAM, type: toggle}, DM_PLY1, DM_REC1, DM_RSTP, '', {t: GMP, type: toggle}]
     - ['', F11, F3, F2, F1, PSCR, QK_BOOT, LSFT, LCTL, LALT, LGUI, '']
     - ['', F12, F6, F5, F4, EE_CLR, QK_LOCK, APP, PST, '', '', 'LLCK']
     - ''
@@ -52,6 +52,12 @@ layers:
     - ''
     - {type: held}
     - ''
+
+  GMP:
+    - [JS9, JS8, '', '', JS_DN, JS_LT, '', '', '', '', '', '']
+    - [JS1, JS3, '', SPC, JS_RT, JS_UP, '', '', '', '', '', '']
+    - [JS0, JS2, JS5, JS7, JS6, JS4, '', '', '', '', '', {t: GMP, type: toggle}]
+    - ['', '', '', '', SPC, '']
 
   CED:
     - ['', '', '', '', '', '', '', '', '', '', '', '']
@@ -86,10 +92,10 @@ layers:
 combos:
   - {p: [2, 3], k: "TAB", l: ["BASE"]}
   - {p: [3, 4], k: "'", l: ["BASE"]}
-  - {p: [26, 27], k: "#", l: ["BASE"]}
-  - {p: [27, 28], k: "^", l: ["BASE"]}
+  - {p: [26, 27], k: "^", l: ["BASE"]}
+  - {p: [27, 28], k: "~", l: ["BASE"]}
   - {p: [7, 8], k: "\"", l: ["BASE"]}
-  - {p: [8, 9], k: "~", l: ["BASE"]}
+  - {p: [8, 9], k: "#", l: ["BASE"]}
   - {p: [31, 32], k: "$", l: ["BASE"]}
   - {p: [32, 33], k: "&", l: ["BASE"]}
   - {p: [6, 7], k: "CAPS", l: ["BASE"]}

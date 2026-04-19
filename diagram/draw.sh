@@ -8,6 +8,8 @@ keymap draw -s NAV -o nav.svg keymap.yaml
 keymap draw -s MOU -o mou.svg keymap.yaml
 keymap draw -s FUN -o fun.svg keymap.yaml
 keymap draw -s GAM -o gam.svg keymap.yaml
+keymap draw -s GNM -o gnm.svg keymap.yaml
+keymap draw -s GMP -o gmp.svg keymap.yaml
 keymap draw -s SYS -o sys.svg keymap.yaml
 keymap draw -s PST -o pst.svg keymap.yaml
 

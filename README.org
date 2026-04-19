@@ -1,17 +1,16 @@
 #+TITLE: naskbd -- QMK Userspace
-#+DESCRIPTION: Colemak-DH keymap for the Corne (crkbd) split keyboard
+#+DESCRIPTION: Gallium v2 keymap for the Corne (crkbd) split keyboard
 
-Colemak-DH keymap for the *Corne (crkbd)* split keyboard, with home row mods, combos, mouse keys, and cedilla input.
+Gallium v2 keymap (with Colemak punctuation positions for =, . / ;=) for the *Corne (crkbd)* split keyboard, with home row mods, combos, mouse keys, and cedilla input.
 
 * Keymaps
 
 | Keymap           | Description                                  |
 |------------------+----------------------------------------------|
-| =naskbd=         | Primary daily driver -- Colemak-DH + HRMods  |
-| =naskbd-gag=     | Meme keymap (monke, samara, ree)             |
+| =naskbd=         | Primary daily driver -- Gallium v2 (Colemak punctuation) + HRMods  |
 
 * Layers
-** BASE (Colemak-DH)
+** BASE (Gallium v2)
 
 [[./diagram/base.svg]]
 
@@ -47,6 +46,18 @@ WM keys send =GUI+N= (workspace switch). With =LSFT= held they send =C-a N= (tmu
 
 Standard QWERTY layout for gaming. Toggle back with =TG(_GAM)= on the right bottom corner.
 
+** GNM (hold from GAM)
+
+[[./diagram/gnm.svg]]
+
+Number/extra keys overlay for GAM layer.
+
+** GMP (toggle from FUN)
+
+[[./diagram/gmp.svg]]
+
+Gamepad layer: joystick buttons and D-pad hat (JS_UP/DN/LT/RT).
+
 ** PST (one-shot from FUN)
 
 [[./diagram/pst.svg]]
@@ -55,25 +66,25 @@ One-shot layer for pasting macros: LinkedIn URL, GitHub URL, email address.
 
 * Combos
 
-| Keys      | Output                    |
-|-----------+---------------------------|
-| W + F     | Tab                       |
-| F + P     | '                         |
-| C + D     | ^                         |
-| L + U     | "                         |
-| U + Y     | ~                         |
-| X + C     | #                         |
-| H + ,     | $                         |
-| , + .     | &                         |
-| J + L     | Caps Lock                 |
-| P + B     | Delete                    |
-| C-V + C-C | C-S-V (paste in terminal) |
-| C-W + C-V | C-S-C (copy in terminal)  |
+| Keys      | Output    |
+|-----------+-----------|
+| L + D     | Tab       |
+| D + C     | '         |
+| Q + M     | ^         |
+| Y + O     | "         |
+| M + W     | ~         |
+| O + U     | #         |
+| F + ,     | $         |
+| , + .     | &         |
+| J + Y     | Caps Lock |
+| C + V     | Delete    |
+| C-V + C-C | C-S-V     |
+| C-A + C-V | C-S-C     |
 
 * Home Row Mods
 
 #+begin_example
- a/GUI   r/ALT   s/CTL   t/SFT   g/RALT  |  m/RALT  n/SFT   e/CTL   i/ALT   o/GUI
+ n/GUI   r/ALT   t/CTL   s/SFT   g/RALT  |  p/RALT  h/SFT   a/CTL   e/ALT   i/GUI
 #+end_example
 
 - Tapping term: 180ms
@@ -125,8 +136,6 @@ qmk compile -kb crkbd/rev1 -km naskbd
 # or build all targets
 qmk userspace-compile
 #+end_src
-
-Firmware is also built via GitHub Actions on push -- check the Releases tab for =.uf2= files.
 
 * Generating diagram
 

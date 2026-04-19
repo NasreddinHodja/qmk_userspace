@@ -23,22 +23,17 @@ const key_override_t* key_overrides[] = {
     &dmply_ko,
 };
 
-
-//   top:  B  L  D  C  V  |  J  Y  O  U  ;
-//   home: N  R  T  S  G  |  P  H  A  E  I
-//   bot:  X  Q  M  W  Z  |  K  F  ,  .  /
-
 // combos
-const uint16_t PROGMEM tab_combo[]    = {KC_L, KC_D, COMBO_END};
-const uint16_t PROGMEM quote_combo[]  = {KC_D, KC_C, COMBO_END};
-const uint16_t PROGMEM circ_combo[]   = {KC_Q, KC_M, COMBO_END};
-const uint16_t PROGMEM dquote_combo[] = {KC_Y, KC_O, COMBO_END};
-const uint16_t PROGMEM tilde_combo[]  = {KC_M, KC_W, COMBO_END};
-const uint16_t PROGMEM hash_combo[]   = {KC_O, KC_U, COMBO_END};
-const uint16_t PROGMEM dlr_combo[]    = {KC_F, KC_COMM, COMBO_END};
+const uint16_t PROGMEM tab_combo[]    = {KC_W, KC_F, COMBO_END};
+const uint16_t PROGMEM quote_combo[]  = {KC_F, KC_P, COMBO_END};
+const uint16_t PROGMEM circ_combo[]   = {KC_C, KC_D, COMBO_END};
+const uint16_t PROGMEM dquote_combo[] = {KC_L, KC_U, COMBO_END};
+const uint16_t PROGMEM tilde_combo[]  = {KC_U, KC_Y, COMBO_END};
+const uint16_t PROGMEM hash_combo[]   = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM dlr_combo[]    = {KC_H, KC_COMM, COMBO_END};
 const uint16_t PROGMEM ampr_combo[]   = {KC_COMM, KC_DOT, COMBO_END};
-const uint16_t PROGMEM caps_combo[]   = {KC_J, KC_Y, COMBO_END};
-const uint16_t PROGMEM del_combo[]    = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM caps_combo[]   = {KC_J, KC_L, COMBO_END};
+const uint16_t PROGMEM del_combo[]    = {KC_P, KC_B, COMBO_END};
 const uint16_t PROGMEM csv_combo[]    = {C(KC_V), C(KC_C), COMBO_END};
 const uint16_t PROGMEM csc_combo[]    = {C(KC_A), C(KC_V), COMBO_END};
 
@@ -99,9 +94,9 @@ const uint8_t layer_count = sizeof(layer_names) / sizeof(layer_names[0]);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BASE] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_B   , KC_L   , KC_D   , KC_C   , KC_V,                      KC_J   , KC_Y   , KC_O   , KC_U   , KC_SCLN, XXXXXXX,
-    XXXXXXX, HRGUI(KC_N), HRALT(KC_R), HRCTL(KC_T), HRSFT(KC_S), HRAGR(KC_G), HRAGR(KC_P), HRSFT(KC_H), HRCTL(KC_A), HRALT(KC_E), HRGUI(KC_I), XXXXXXX,
-    XXXXXXX, KC_X   , KC_Q   , KC_M   , KC_W   , KC_Z,                      KC_K   , KC_F   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX,
+    XXXXXXX, KC_Q   , KC_W   , KC_F   , KC_P   , KC_B,                      KC_J   , KC_L   , KC_U   , KC_Y   , KC_SCLN, XXXXXXX,
+    XXXXXXX, HRGUI(KC_A), HRALT(KC_R), HRCTL(KC_S), HRSFT(KC_T), HRAGR(KC_G), HRAGR(KC_M), HRSFT(KC_N), HRCTL(KC_E), HRALT(KC_I), HRGUI(KC_O), XXXXXXX,
+    XXXXXXX, KC_Z   , KC_X   , KC_C   , KC_D   , KC_V,                      KC_K   , KC_H   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX,
                                 XXXXXXX, LT(_NAV, KC_ESC), LT(_SYS, KC_BSPC),    LT(_SYM, KC_ENT), LT(_NUM, KC_SPC), XXXXXXX
 ),
 
@@ -196,28 +191,28 @@ bool handle_ced(uint16_t keycode, keyrecord_t *record) {
             if (!(get_mods() & MOD_BIT(KC_RALT))) break;
             ced_toggled = true;
             break;
-        case HRSFT(KC_S):
+        case HRSFT(KC_T):
             if (ced_toggled) {
                 tap_code16(KC_TILD); tap_code16(KC_A);
                 ced_toggled = false;
                 return false;
             }
             break;
-        case KC_W:
+        case KC_D:
             if (ced_toggled) {
                 tap_code16(KC_TILD); tap_code16(KC_O);
                 ced_toggled = false;
                 return false;
             }
             break;
-        case HRSFT(KC_H):
+        case HRSFT(KC_N):
             if (ced_toggled) {
                 tap_code16(KC_TILD); tap_code16(KC_A); SEND_STRING("o");
                 ced_toggled = false;
                 return false;
             }
             break;
-        case KC_F:
+        case KC_H:
             if (ced_toggled) {
                 tap_code16(KC_TILD); tap_code16(KC_O); SEND_STRING("es");
                 ced_toggled = false;
