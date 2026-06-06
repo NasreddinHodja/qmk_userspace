@@ -16,24 +16,24 @@ layers:
     - {t: i, h: LGUI}
     - ''
     - ['', x, q, m, w, z, k, f, ',', '.', '/', '']
-    - ['', {t: ESC, h: NAV}, {t: BSPC, h: SYS}, {t: ENT, h: SYM}, {t: SPC, h: NUM}, '']
+    - ['', {t: ESC, h: NAV}, {t: BSPC, h: SYS}, {t: "'", h: SYM}, {t: SPC, h: NUM}, '']
 
   NUM:
     - ['', '`', '9', '8', '7', '[', '', '', '', '', '', '']
     - ['', "'", '3', '2', '1', '=', 'RALT', 'LSFT', 'LCTL', 'LALT', 'LGUI', '']
-    - ['', '/', '6', '5', '4', ']', '', '', '', '', '', 'LLCK']
+    - ['', '/', '6', '5', '4', ']', '', '', '', '', 'LLCK', '']
     - ['', {t: '0', h: FUN}, '\', '', {type: held}, '']
 
   SYM:
     - ['', '^', '~', '{', '(', '&', '', '', '', '', '', '']
     - ['', '%', '#', '*', '!', '+', 'RALT', 'LSFT', 'LCTL', 'LALT', 'LGUI', '']
-    - ['', '@', '|', '}', ')', '$', '', '', '', '', '', 'LLCK']
+    - ['', '@', '|', '}', ')', '$', '', '', '', '', 'LLCK', '']
     - ['', '-', '_', {type: held}, '', '']
 
   NAV:
-    - ['', C-z, C-a, C-v, C-c, C-x, C-x, C-c, C-v, C-u, MUTE, '']
-    - ['', LGUI, LALT, LCTL, LSFT, CAPS, LEFT, DOWN, UP, RGHT, VOLU, '']
-    - ['LLCK', {t: MOU, type: toggle}, MPRV, MPLY, MNXT, C-a, HOME, PGDN, PGUP, END, VOLD, '']
+    - ['', C-z, C-a, C-v, C-c, C-x, '', BSPC, ENT, TAB, '', '']
+    - ['', LGUI, LALT, LCTL, LSFT, CAPS, LEFT, DOWN, UP, RGHT, '', '']
+    - ['', LLCK, MUTE, VOLD, VOLU, {t: MOU, type: toggle}, HOME, PGDN, PGUP, END, '', '']
     - ['', {type: held}, '', INS, {t: DEL, h: FUN}, '']
 
   MOU:
@@ -78,10 +78,10 @@ layers:
     - ['', '', '', '', '', '']
 
   GAM:
-    - [T, TAB, Q, X, E, R, Y, U, I, O, P, '']
-    - [G, LSFT, A, W, D, F, H, J, K, L, ';', '']
-    - [B, LCTL, Z, S, C, V, N, M, ',', '.', '/', {t: GAM, type: toggle}]
-    - ['GNM', ESC, BSPC, ENT, SPC, '']
+    - [T, TAB, Q, W, E, R, Y, U, I, O, P, '']
+    - [G, LSFT, A, S, D, F, H, J, K, L, ';', '']
+    - [B, LCTL, Z, X, C, V, N, M, ',', '.', '/', {t: GAM, type: toggle}]
+    - ['GNM', SPC, ESC, ENT, BSPC, '']
 
   GNM:
     - ['1', '2', '3', '', '4', '5', '', '', '', '', '', '']
@@ -91,7 +91,7 @@ layers:
 
 combos:
   - {p: [2, 3], k: "TAB", l: ["BASE"]}
-  - {p: [3, 4], k: "'", l: ["BASE"]}
+  - {p: [3, 4], k: "´", l: ["BASE"]}
   - {p: [26, 27], k: "^", l: ["BASE"]}
   - {p: [27, 28], k: "~", l: ["BASE"]}
   - {p: [7, 8], k: "\"", l: ["BASE"]}
