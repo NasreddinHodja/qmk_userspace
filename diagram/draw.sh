@@ -7,8 +7,10 @@ keymap draw -s SYM -o sym.svg keymap.yaml
 keymap draw -s NAV -o nav.svg keymap.yaml
 keymap draw -s MOU -o mou.svg keymap.yaml
 keymap draw -s FUN -o fun.svg keymap.yaml
-keymap draw -s GAM -o gam.svg keymap.yaml
-keymap draw -s GNM -o gnm.svg keymap.yaml
+keymap draw -s FPS -o fps.svg keymap.yaml
+keymap draw -s FPSN -o fpsn.svg keymap.yaml
+keymap draw -s MOBA -o moba.svg keymap.yaml
+keymap draw -s MOBAN -o moban.svg keymap.yaml
 keymap draw -s GMP -o gmp.svg keymap.yaml
 keymap draw -s SYS -o sys.svg keymap.yaml
 keymap draw -s PST -o pst.svg keymap.yaml

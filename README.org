@@ -1,13 +1,7 @@
 #+TITLE: naskbd -- QMK Userspace
 #+DESCRIPTION: Gallium v2 keymap for the Corne (crkbd) split keyboard
 
-Gallium v2 keymap (with Colemak punctuation positions for =, . / ;=) for the *Corne (crkbd)* split keyboard, with home row mods, combos, mouse keys, and cedilla input.
-
-* Keymaps
-
-| Keymap           | Description                                  |
-|------------------+----------------------------------------------|
-| =naskbd=         | Primary daily driver -- Gallium v2 (Colemak punctuation) + HRMods  |
+Gallium v2 keymap (with Colemak punctuation positions for =, . / ;=) for the Corne (crkbd) split keyboard.
 
 * Layers
 ** BASE (Gallium v2)
@@ -40,17 +34,29 @@ Gallium v2 keymap (with Colemak punctuation positions for =, . / ;=) for the *Co
 
 WM keys send =GUI+N= (workspace switch). With =LSFT= held they send =C-a N= (tmux window switch).
 
-** GAM (QWERTY, toggle from FUN)
+** FPS (QWERTY, toggle from FUN)
 
-[[./diagram/gam.svg]]
+[[./diagram/fps.svg]]
 
-Standard QWERTY layout for gaming. Toggle back with =TG(_GAM)= on the right bottom corner.
+QWERTY layout for FPS games, shifted one column right so =WASD= sits under the left hand. Toggle back with =TG(_FPS)= on the right bottom corner.
 
-** GNM (hold from GAM)
+** FPSN (hold from FPS)
 
-[[./diagram/gnm.svg]]
+[[./diagram/fpsn.svg]]
 
-Number/extra keys overlay for GAM layer.
+Number/extra keys overlay for the FPS layer.
+
+** MOBA (QWERTY, toggle from FUN)
+
+[[./diagram/moba.svg]]
+
+Straight QWERTY for MOBAs, with =TAB/LSFT/LCTL= on the outer column. Toggle back with =TG(_MOBA)= on the right bottom corner.
+
+** MOBAN (hold from MOBA)
+
+[[./diagram/moban.svg]]
+
+Number/item-slot overlay for the MOBA layer.
 
 ** GMP (toggle from FUN)
 
@@ -70,14 +76,12 @@ One-shot layer for pasting macros: LinkedIn URL, GitHub URL, email address.
 |-----------+-----------|
 | L + D     | Tab       |
 | D + C     | '         |
-| Q + M     | ^         |
-| Y + O     | "         |
-| M + W     | ~         |
-| O + U     | #         |
-| F + ,     | $         |
-| , + .     | &         |
-| J + Y     | Caps Lock |
 | C + V     | Delete    |
+| J + Y     | Caps Lock |
+| Y + O     | $         |
+| O + U     | &         |
+| Q + M     | ^         |
+| M + W     | ~         |
 | C-V + C-C | C-S-V     |
 | C-A + C-V | C-S-C     |
 
@@ -124,9 +128,14 @@ Located in =users/NasreddinHodja/=:
 - =layer_report/= -- sends layer state over Raw HID
 
 * Building
-
+Setup (once):
 #+begin_src sh
-# setup (once)
+qmk setup
+qmk config user.overlay_dir="$(realpath .)"
+#+end_src
+
+Build:
+#+begin_src sh
 qmk setup
 qmk config user.overlay_dir="$(realpath .)"
 

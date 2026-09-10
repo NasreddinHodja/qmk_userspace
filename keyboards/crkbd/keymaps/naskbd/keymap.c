@@ -1,11 +1,30 @@
+#include "keycodes.h"
 #include QMK_KEYBOARD_H
-#include "raw_hid.h"
 
 #include <stdint.h>
-#include "print.h"
 
 #include "layer_report/layer_report.h"
 #include "mouse_brr/mouse_brr.h"
+
+#define NAS_LAYOUT_3x6_3( \
+    k0A, k0B, k0C, k0D, k0E, k0F, \
+    k1A, k1B, k1C, k1D, k1E, k1F, \
+    k2A, k2B, k2C, k2D, k2E, k2F, \
+    k3D, k3E, k3F, \
+    k4F, k4E, k4D, k4C, k4B, k4A, \
+    k5F, k5E, k5D, k5C, k5B, k5A, \
+    k6F, k6E, k6D, k6C, k6B, k6A, \
+    k7F, k7E, k7D  \
+) { \
+    { k0A, k0B, k0C, k0D, k0E, k0F }, \
+    { k1A, k1B, k1C, k1D, k1E, k1F }, \
+    { k2A, k2B, k2C, k2D, k2E, k2F }, \
+    { XXX, XXX, XXX, k3D, k3E, k3F }, \
+    { k4A, k4B, k4C, k4D, k4E, k4F }, \
+    { k5A, k5B, k5C, k5D, k5E, k5F }, \
+    { k6A, k6B, k6C, k6D, k6E, k6F }, \
+    { XXX, XXX, XXX, k7D, k7E, k7F }  \
+}
 
 // base mods
 #define HRGUI(key) MT(MOD_LGUI, key)
@@ -32,11 +51,9 @@ const key_override_t* key_overrides[] = {
 const uint16_t PROGMEM tab_combo[]    = {KC_L, KC_D, COMBO_END};
 const uint16_t PROGMEM quote_combo[]  = {KC_D, KC_C, COMBO_END};
 const uint16_t PROGMEM circ_combo[]   = {KC_Q, KC_M, COMBO_END};
-const uint16_t PROGMEM dquote_combo[] = {KC_Y, KC_O, COMBO_END};
 const uint16_t PROGMEM tilde_combo[]  = {KC_M, KC_W, COMBO_END};
-const uint16_t PROGMEM hash_combo[]   = {KC_O, KC_U, COMBO_END};
-const uint16_t PROGMEM dlr_combo[]    = {KC_F, KC_COMM, COMBO_END};
-const uint16_t PROGMEM ampr_combo[]   = {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM dlr_combo[]    = {KC_Y, KC_O, COMBO_END};
+const uint16_t PROGMEM ampr_combo[]   = {KC_O, KC_U, COMBO_END};
 const uint16_t PROGMEM caps_combo[]   = {KC_J, KC_Y, COMBO_END};
 const uint16_t PROGMEM del_combo[]    = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM csv_combo[]    = {C(KC_V), C(KC_C), COMBO_END};
@@ -46,9 +63,7 @@ combo_t key_combos[] = {
     COMBO(tab_combo, KC_TAB),
     COMBO(quote_combo, KC_QUOT),
     COMBO(circ_combo, KC_CIRC),
-    COMBO(dquote_combo, RSA(KC_DQUO)),
     COMBO(tilde_combo, KC_TILD),
-    COMBO(hash_combo, KC_HASH),
     COMBO(ampr_combo, KC_AMPR),
     COMBO(dlr_combo, KC_DLR),
     COMBO(caps_combo, KC_CAPS),
@@ -73,11 +88,14 @@ enum layers {
     _BASE,
     _NUM,
     _SYM,
+    /* _ITL, */
     _NAV,
     _MOU,
     _FUN,
-    _GAM,
-    _GNM,
+    _FPS,
+    _FPSN,
+    _MOBA,
+    _MOBAN,
     _GMP,
     _SYS,
     _PST,
@@ -88,91 +106,172 @@ const char* const layer_names[] = {
     [_SYM] = "SYM",
     [_NAV] = "NAV",
     [_MOU] = "MOU",
-    [_GAM] = "GAM",
-    [_GNM] = "GNM",
+    [_FUN] = "FUN",
+    [_FPS] = "FPS",
+    [_FPSN] = "FPSN",
+    [_MOBA] = "MOBA",
+    [_MOBAN] = "MOBAN",
     [_GMP] = "GMP",
     [_SYS] = "SYS",
     [_PST] = "PST",
 };
 const uint8_t layer_count = sizeof(layer_names) / sizeof(layer_names[0]);
 
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-[_BASE] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_B   , KC_L   , KC_D   , KC_C   , KC_V,                      KC_J   , KC_Y   , KC_O   , KC_U   , KC_SCLN, XXXXXXX,
-    XXXXXXX, HRGUI(KC_N), HRALT(KC_R), HRCTL(KC_T), HRSFT(KC_S), HRAGR(KC_G), HRAGR(KC_P), HRSFT(KC_H), HRCTL(KC_A), HRALT(KC_E), HRGUI(KC_I), XXXXXXX,
-    XXXXXXX, KC_X   , KC_Q   , KC_M   , KC_W   , KC_Z,                      KC_K   , KC_F   , KC_COMM, KC_DOT , KC_SLSH, XXXXXXX,
-    XXXXXXX, LT(_NAV, KC_ESC), LT(_SYS, KC_BSPC),    LT(_SYM, RALT(KC_QUOT)), LT(_NUM, KC_SPC), XXXXXXX
+[_BASE] = NAS_LAYOUT_3x6_3(
+    KC_TAB , KC_B       , KC_L       , KC_D       , KC_C            , KC_V,
+    KC_QUOT, HRGUI(KC_N), HRALT(KC_R), HRCTL(KC_T), HRSFT(KC_S)     , HRAGR(KC_G),
+    XXXXXXX, KC_X       , KC_Q       , KC_M       , KC_W            , KC_Z,
+                                       XXXXXXX    , LT(_NAV, KC_ESC), LT(_SYS, KC_BSPC),
+
+    KC_J                   , KC_Y            , KC_O       , KC_U       , KC_SCLN    , KC_ENT,
+    HRAGR(KC_P)            , HRSFT(KC_H)     , HRCTL(KC_A), HRALT(KC_E), HRGUI(KC_I), KC_BSPC,
+    KC_K                   , KC_F            , KC_COMM    , KC_DOT     , KC_SLSH    , XXXXXXX,
+    LT(_SYM, RALT(KC_QUOT)), LT(_NUM, KC_SPC), XXXXXXX
 ),
 
-[_NUM] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_GRV , KC_9   , KC_8   , KC_7   , KC_LBRC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, KC_QUOT, KC_3   , KC_2   , KC_1   , KC_EQL ,                      KC_RALT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
-    XXXXXXX, KC_SLSH, KC_6   , KC_5   , KC_4   , KC_RBRC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_LLCK, XXXXXXX,
-                                        XXXXXXX, LT(_FUN, KC_0), KC_BSLS,      XXXXXXX, _______, XXXXXXX
+[_NUM] = NAS_LAYOUT_3x6_3(
+    XXXXXXX, KC_GRV , KC_9, KC_8   , KC_7          , KC_LBRC,
+    XXXXXXX, KC_QUOT, KC_3, KC_2   , KC_1          , KC_EQL,
+    XXXXXXX, KC_SLSH, KC_6, KC_5   , KC_4          , KC_RBRC,
+                            XXXXXXX, LT(_FUN, KC_0), KC_BSLS,
+
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    KC_RALT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_LLCK, XXXXXXX,
+    XXXXXXX, _______, XXXXXXX
 ),
 
-[_SYM] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_CIRC, KC_TILD, KC_LCBR, KC_LPRN, KC_AMPR,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, KC_PERC, KC_HASH, KC_ASTR, KC_EXLM, KC_PLUS,                      KC_RALT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
-    XXXXXXX, KC_AT  , KC_PIPE, KC_RCBR, KC_RPRN, KC_DLR ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_LLCK, XXXXXXX,
-                                        XXXXXXX, KC_MINS, KC_UNDS,    _______, XXXXXXX, XXXXXXX
+[_SYM] = NAS_LAYOUT_3x6_3(
+    XXXXXXX, RALT(KC_CIRC), RALT(KC_TILD), KC_LCBR, KC_LPRN, KC_AMPR,
+    XXXXXXX, KC_PERC      , KC_HASH      , KC_ASTR, KC_EXLM, KC_PLUS,
+    XXXXXXX, KC_AT        , KC_PIPE      , KC_RCBR, KC_RPRN, KC_DLR,
+                                           XXXXXXX, KC_MINS, KC_UNDS,
+
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    KC_RALT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_LLCK, XXXXXXX,
+    _______, XXXXXXX, XXXXXXX
 ),
 
-[_NAV] = LAYOUT_split_3x6_3(
-    XXXXXXX, C(KC_Z), C(KC_A), C(KC_V), C(KC_C), C(KC_X),                      XXXXXXX, KC_BSPC, KC_ENT, KC_TAB, XXXXXXX, XXXXXXX,
-    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_CAPS,                      KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, XXXXXXX, XXXXXXX,
-    XXXXXXX, QK_LLCK, KC_MUTE, KC_VOLD, KC_VOLU, TG(_MOU),                      KC_HOME, KC_PGDN, KC_PGUP, KC_END , XXXXXXX, XXXXXXX,
-                                        XXXXXXX, _______, XXXXXXX,    KC_INS , LT(_FUN, KC_DEL) , XXXXXXX
+[_NAV] = NAS_LAYOUT_3x6_3(
+    XXXXXXX, C(KC_Z), C(KC_A) , C(KC_V), C(KC_C), C(KC_X),
+    XXXXXXX, KC_LGUI, KC_LALT , KC_LCTL, KC_LSFT, KC_VOLU,
+    XXXXXXX, QK_LLCK, TG(_MOU), KC_MUTE, KC_MPLY, KC_VOLD,
+                                XXXXXXX, _______, XXXXXXX,
+
+    XXXXXXX, KC_BSPC         , KC_ENT , KC_TAB , XXXXXXX, XXXXXXX,
+    KC_LEFT, KC_DOWN         , KC_UP  , KC_RGHT, KC_CAPS, XXXXXXX,
+    KC_HOME, KC_PGDN         , KC_PGUP, KC_END , XXXXXXX, XXXXXXX,
+    KC_INS , LT(_FUN, KC_DEL), XXXXXXX
 ),
 
-[_MOU] = LAYOUT_split_3x6_3(
-    XXXXXXX, C(KC_Z), C(KC_U), C(KC_V), C(KC_C), C(KC_X),                      C(KC_X), C(KC_C), C(KC_V), C(KC_U), C(KC_Z), XXXXXXX,
-    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_VOLU,                      MS_LEFT, MS_DOWN, MS_UP  , MS_RGHT, KC_TAB , XXXXXXX,
-    XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, MOU_BRR,                      MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3, XXXXXXX,
-                                        _______, _______, _______,    MS_BTN2, MS_BTN1, XXXXXXX
+[_MOU] = NAS_LAYOUT_3x6_3(
+    XXXXXXX, C(KC_Z), C(KC_U), C(KC_V), C(KC_C), C(KC_X),
+    XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_VOLU,
+    XXXXXXX, KC_VOLD, KC_MPRV, KC_MPLY, KC_MNXT, MOU_BRR,
+                               _______, _______, _______,
+
+    C(KC_X), C(KC_C), C(KC_V), C(KC_U), C(KC_Z), XXXXXXX,
+    MS_LEFT, MS_DOWN, MS_UP  , MS_RGHT, KC_TAB , XXXXXXX,
+    MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, MS_BTN3, XXXXXXX,
+    MS_BTN2, MS_BTN1, XXXXXXX
 ),
 
-[_FUN] = LAYOUT_split_3x6_3(
-    XXXXXXX, KC_F10 , KC_F9  , KC_F8  , KC_F7  , KC_PAUS,                      TG(_GAM), DM_PLY1, DM_REC1, DM_RSTP, XXXXXXX, TG(_GMP),
-    XXXXXXX, KC_F11 , KC_F3  , KC_F2  , KC_F1  , KC_PSCR,                      QK_BOOT, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
-    XXXXXXX, KC_F12 , KC_F6  , KC_F5  , KC_F4  , EE_CLR ,                      QK_LOCK, KC_APP , OSL(_PST), XXXXXXX, XXXXXXX, QK_LLCK,
-                                        XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
+[_FUN] = NAS_LAYOUT_3x6_3(
+    XXXXXXX, KC_F10, KC_F9, KC_F8  , KC_F7  , KC_PAUS,
+    XXXXXXX, KC_F11, KC_F3, KC_F2  , KC_F1  , KC_PSCR,
+    XXXXXXX, KC_F12, KC_F6, KC_F5  , KC_F4  , EE_CLR,
+                            XXXXXXX, _______, XXXXXXX,
+
+    TG(_FPS), DM_PLY1, DM_REC1  , DM_RSTP, XXXXXXX, TG(_GMP),
+    TG(_MOBA), KC_LSFT, KC_LCTL  , KC_LALT, KC_LGUI, QK_BOOT,
+    QK_LOCK , KC_APP , OSL(_PST), XXXXXXX, XXXXXXX, QK_LLCK,
+    XXXXXXX , _______, XXXXXXX
 ),
 
-[_GAM] = LAYOUT_split_3x6_3(
-    KC_T   , KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   ,                      KC_Y, KC_U   , KC_I   , KC_O   , KC_P   , XXXXXXX,
-    KC_G   , KC_LSFT, KC_A   , KC_S   , KC_D   , KC_F   ,                      KC_H, KC_J   , KC_K   , KC_L   , KC_SCLN, XXXXXXX,
-    KC_B   , KC_LCTL, KC_Z   , KC_X   , KC_C   , KC_V   ,                      KC_N, KC_M   , KC_COMM, KC_DOT , KC_SLSH, TG(_GAM),
-                                        MO(_GNM), KC_SPC, KC_ESC ,    KC_ENT, KC_BSPC, XXXXXXX
+[_FPS] = NAS_LAYOUT_3x6_3(
+    KC_T, KC_TAB , KC_Q, KC_W    , KC_E  , KC_R,
+    KC_G, KC_LSFT, KC_A, KC_S    , KC_D  , KC_F,
+    KC_B, KC_LCTL, KC_Z, KC_X    , KC_C  , KC_V,
+                         MO(_FPSN), KC_SPC, KC_ESC,
+
+    KC_Y  , KC_U   , KC_I   , KC_O  , KC_P   , XXXXXXX,
+    KC_H  , KC_J   , KC_K   , KC_L  , KC_SCLN, XXXXXXX,
+    KC_N  , KC_M   , KC_COMM, KC_DOT, KC_SLSH, TG(_FPS),
+    KC_ENT, KC_BSPC, XXXXXXX
 ),
 
-[_GNM] = LAYOUT_split_3x6_3(
-    KC_1   , KC_2   , KC_3   , XXXXXXX, KC_4   , KC_5   ,                      _______, _______, _______, _______, _______, _______,
-    KC_0   , _______, _______, _______, _______, KC_6   ,                      _______, _______, _______, _______, _______, _______,
-    KC_GRV , _______, KC_9   , _______, KC_8   , KC_7   ,                      _______, _______, _______, _______, _______, _______,
-                                        _______, XXXXXXX, XXXXXXX,    _______, _______, _______
+[_FPSN] = NAS_LAYOUT_3x6_3(
+    KC_1  , KC_2   , KC_3   , XXXXXXX, KC_4   , KC_5,
+    KC_0  , _______, _______, _______, _______, KC_6,
+    KC_GRV, _______, KC_9   , _______, KC_8   , KC_7,
+                              _______, XXXXXXX, XXXXXXX,
+
+    _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______,
+    _______, _______, _______
 ),
 
-[_GMP] = LAYOUT_split_3x6_3(
-    JS_9   , JS_8   , XXXXXXX, XXXXXXX, JS_DN  , JS_LT  ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    JS_1   , JS_3   , XXXXXXX, KC_SPC , JS_RT  , JS_UP  ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    JS_0   , JS_2   , JS_5   , JS_7   , JS_6   , JS_4   ,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TG(_GMP),
-                                        XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_SPC , XXXXXXX
+[_MOBA] = NAS_LAYOUT_3x6_3(
+    KC_TAB , KC_Q, KC_W, KC_E   , KC_R    , KC_T,
+    KC_LSFT, KC_A, KC_S, KC_D   , KC_F    , KC_G,
+    KC_LCTL, KC_Z, KC_X, KC_C   , KC_V    , KC_B,
+                         KC_MINS, MO(_MOBAN), KC_ESC,
+
+    KC_Y  , KC_U   , KC_I   , KC_O  , KC_P   , XXXXXXX,
+    KC_H  , KC_J   , KC_K   , KC_L  , KC_SCLN, XXXXXXX,
+    KC_N  , KC_M   , KC_COMM, KC_DOT, KC_SLSH, TG(_MOBA),
+    KC_ENT, KC_BSPC, XXXXXXX
 ),
 
-[_SYS] = LAYOUT_split_3x6_3(
-    XXXXXXX, G(KC_Q), K_WM9   , K_WM8   , K_WM7   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, C(KC_A), K_WM3   , K_WM2   , K_WM1   , XXXXXXX,                      XXXXXXX, KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, K_WM6   , K_WM5   , K_WM4   , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                          XXXXXXX, XXXXXXX, _______,    XXXXXXX, XXXXXXX, XXXXXXX
+[_MOBAN] = NAS_LAYOUT_3x6_3(
+    KC_TAB , KC_6  , KC_7   , KC_6   , KC_8   , KC_9   ,
+    KC_LSFT, KC_1  , KC_2   , KC_3   , KC_4   , KC_5   ,
+    KC_LCTL, KC_GRV, KC_BSLS, KC_RBRC, KC_LBRC, KC_SLSH,
+                              XXXXXXX, _______, XXXXXXX,
+
+    _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______,
+    _______, _______, _______
 ),
 
-[_PST] = LAYOUT_split_3x6_3(
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, K_LKL  , K_GHL  , K_EML  , XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                        XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
+[_GMP] = NAS_LAYOUT_3x6_3(
+    JS_9, JS_8, XXXXXXX, XXXXXXX, JS_DN  , JS_LT,
+    JS_1, JS_3, XXXXXXX, KC_SPC , JS_RT  , JS_UP,
+    JS_0, JS_2, JS_5   , JS_7   , JS_6   , JS_4,
+                         XXXXXXX, XXXXXXX, XXXXXXX,
+
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TG(_GMP),
+    XXXXXXX, KC_SPC , XXXXXXX
+),
+
+[_SYS] = NAS_LAYOUT_3x6_3(
+    XXXXXXX, G(KC_Q), K_WM9, K_WM8  , K_WM7  , XXXXXXX,
+    XXXXXXX, C(KC_A), K_WM3, K_WM2  , K_WM1  , XXXXXXX,
+    XXXXXXX, XXXXXXX, K_WM6, K_WM5  , K_WM4  , XXXXXXX,
+                             XXXXXXX, XXXXXXX, _______,
+
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX
+),
+
+[_PST] = NAS_LAYOUT_3x6_3(
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, K_LKL  , K_GHL  , K_EML  , XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                               XXXXXXX, XXXXXXX, XXXXXXX,
+
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX
 ),
 };
 
@@ -219,14 +318,16 @@ bool handle_ced(uint16_t keycode, keyrecord_t *record) {
             break;
         case HRSFT(KC_H):
             if (ced_toggled) {
-                tap_code16(KC_TILD); tap_code16(KC_A); SEND_STRING("o");
+                tap_code16(KC_TILD); tap_code16(KC_A);
+                SEND_STRING("o");
                 ced_toggled = false;
                 return false;
             }
             break;
         case KC_F:
             if (ced_toggled) {
-                tap_code16(KC_TILD); tap_code16(KC_O); SEND_STRING("es");
+                tap_code16(KC_TILD); tap_code16(KC_O);
+                SEND_STRING("es");
                 ced_toggled = false;
                 return false;
             }
@@ -243,7 +344,8 @@ bool handle_sys(uint16_t keycode, keyrecord_t *record) {
     if (keycode < K_WM0 || keycode > K_WM9) return true;
 
     static const uint16_t wm_keys[] = {
-        KC_0, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9
+    KC_0, KC_1, KC_2, KC_3, KC_4,
+    KC_5, KC_6, KC_7, KC_8, KC_9
     };
 
     uint8_t idx = keycode - K_WM0;
