@@ -1,7 +1,7 @@
 #+TITLE: naskbd -- QMK Userspace
-#+DESCRIPTION: Gallium v2 keymap for the Corne (crkbd) split keyboard
+#+DESCRIPTION: Gallium v2 keymap for the Corne split keyboard
 
-Gallium v2 keymap (with Colemak punctuation positions for =, . / ;=) for the Corne (crkbd) split keyboard.
+Gallium v2 keymap (with Colemak punctuation positions for =, . / ;=) for the Corne split keyboard.
 
 * Layers
 ** BASE (Gallium v2)
@@ -50,7 +50,7 @@ Number/extra keys overlay for the FPS layer.
 
 [[./diagram/moba.svg]]
 
-Straight QWERTY for MOBAs, with =TAB/LSFT/LCTL= on the outer column. Toggle back with =TG(_MOBA)= on the right bottom corner.
+Straight QWERTY for MOBA/ARPG, with =TAB/LSFT/LCTL= on the outer column and =LALT/SPC/MOBAN= on the left thumbs. Toggle back with =TG(_MOBA)= on the right bottom corner.
 
 ** MOBAN (hold from MOBA)
 
@@ -74,12 +74,12 @@ One-shot layer for pasting macros: LinkedIn URL, GitHub URL, email address.
 
 | Keys      | Output    |
 |-----------+-----------|
-| L + D     | Tab       |
 | D + C     | '         |
-| C + V     | Delete    |
+| C + V     | Tab       |
+| W + Z     | Delete    |
 | J + Y     | Caps Lock |
-| Y + O     | $         |
-| O + U     | &         |
+| F + ,     | $         |
+| , + .     | &         |
 | Q + M     | ^         |
 | M + W     | ~         |
 | C-V + C-C | C-S-V     |

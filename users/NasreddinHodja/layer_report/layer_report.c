@@ -2,7 +2,7 @@
 
 #include "raw_hid.h"
 
-#include <string.h>
+#include <stdio.h>
 
 void send_layer_report(uint8_t layer) {
     uint8_t report[32] = {0};
@@ -14,6 +14,6 @@ void send_layer_report(uint8_t layer) {
             ? layer_names[layer]
             : "UNKNOWN";
 
-    strncpy((char*)&report[2], layer_name, 30);
+    snprintf((char*)&report[1], sizeof(report) - 1, "%u:%s", layer, layer_name);
     raw_hid_send(report, sizeof(report));
 }

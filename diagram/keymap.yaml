@@ -70,13 +70,13 @@ layers:
     - [TAB, Q, W, E, R, T, Y, U, I, O, P, '']
     - [LSFT, A, S, D, F, G, H, J, K, L, ';', '']
     - [LCTL, Z, X, C, V, B, N, M, ',', '.', '/', {t: MOBA, type: toggle}]
-    - ['-', {t: MOBAN, type: held}, ESC, ENT, BSPC, '']
+    - [LALT, SPC, {t: MOBAN, type: held}, ENT, BSPC, '']
 
   MOBAN:
     - [TAB, '6', '7', '6', '8', '9', '', '', '', '', '', '']
     - [LSFT, '1', '2', '3', '4', '5', '', '', '', '', '', '']
     - [LCTL, '`', '\', ']', '[', '/', '', '', '', '', '', '']
-    - ['', {type: held}, '', '', '', '']
+    - ['', '', {type: held}, '', '', '']
 
   GMP:
     - [JS9, JS8, '', '', JS_DN, JS_LT, '', '', '', '', '', '']
@@ -97,12 +97,12 @@ layers:
     - ['', '', '', '', '', '']
 
 combos:
-  - {p: [2, 3], k: "TAB", l: ["BASE"]}
   - {p: [3, 4], k: "´", l: ["BASE"]}
-  - {p: [4, 5], k: "DEL", l: ["BASE"]}
+  - {p: [4, 5], k: "TAB", l: ["BASE"]}
+  - {p: [28, 29], k: "DEL", l: ["BASE"]}
   - {p: [6, 7], k: "CAPS", l: ["BASE"]}
-  - {p: [7, 8], k: "$", l: ["BASE"]}
-  - {p: [8, 9], k: "&", l: ["BASE"]}
+  - {p: [31, 32], k: "$", l: ["BASE"]}
+  - {p: [32, 33], k: "&", l: ["BASE"]}
   - {p: [26, 27], k: "^", l: ["BASE"]}
   - {p: [27, 28], k: "~", l: ["BASE"]}
   - {p: [2, 3], k: "LCS-c", l: ["NAV"]}
